@@ -14,8 +14,69 @@ class TownViewController: UIViewController, TownViewProtocol {
 
 	var presenter: TownPresenterProtocol?
 
+    @IBOutlet weak var townTextField: UITextField!
+    
+    @IBAction func townTextFieldEdit(_ sender: UITextField) {
+    }
+    
+    @IBOutlet weak var addButton: UIButton!
+    
+    @IBAction func addButtonAction(_ sender: UIButton) {
+    }
+    
+    @IBOutlet weak var townTableView: UITableView!
+    
 	override func viewDidLoad() {
         super.viewDidLoad()
+    //    townTableView.estimatedRowHeight = 100
+    //    townTableView.rowHeight = UITableView.automaticDimension
     }
 
+}
+
+extension TownViewController:  UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier:"TownTableViewCell", for: indexPath)
+        if let cell = cell as? TownTableViewCell {
+            cell.townTableViewCellDelegate = self
+            if indexPath.row > 0 {
+                
+                cell.configCell(text: "Киев", type: true, index: indexPath.row)
+            }
+            else {
+                cell.configCell(text: "Винница Винница Винница Винница Винница Винница Винница Винница Винница Винница Винница Винница Винница Винница ", type: false, index: indexPath.row)
+            }
+        }
+        return cell
+    }
+    
+ //   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+  //      return UITableView.automaticDimension
+ //   }
+}
+
+extension TownViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+    }
+}
+
+extension TownViewController: TownTableViewCellDelegate {
+    func getIndex(index: Int?) {
+
+        presenter?.actionCellButton(index: index)
+  
+    }
+    
+    
 }

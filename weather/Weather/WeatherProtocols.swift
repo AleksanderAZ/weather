@@ -30,3 +30,7 @@ protocol WeatherViewProtocol: class {
 
   var presenter: WeatherPresenterProtocol?  { get set }
 }
+
+protocol WeatherTableViewCellProtocol: class {
+    
+}

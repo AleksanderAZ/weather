@@ -22,4 +22,7 @@ class TownPresenter: TownPresenterProtocol {
         self.router = router
     }
 
+    func actionCellButton(index: Int?) {
+        print(index)
+    }
 }

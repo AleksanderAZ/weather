@@ -16,7 +16,7 @@ protocol TownWireframeProtocol: class {
 }
 //MARK: Presenter -
 protocol TownPresenterProtocol: class {
-
+    func actionCellButton(index: Int?)
 }
 
 //MARK: Interactor -
@@ -30,3 +30,18 @@ protocol TownViewProtocol: class {
 
   var presenter: TownPresenterProtocol?  { get set }
 }
+
+protocol TownTableViewCellDelegate: class {
+    func getIndex(index: Int?)  //ShoppingCart
+}
+
+
+protocol TownTableViewCellProtocol: class {
+    
+    var presenter: TownTablePresenterCellProtocol?  { get set }
+}
+
+protocol TownTablePresenterCellProtocol: class {
+    var index: Int? {get set}
+}
+
