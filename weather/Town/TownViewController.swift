@@ -13,7 +13,8 @@ import UIKit
 class TownViewController: UIViewController, TownViewProtocol {
 
 	var presenter: TownPresenterProtocol?
-
+    
+    
     @IBOutlet weak var townTextField: UITextField!
     
     @IBAction func townTextFieldEdit(_ sender: UITextField) {
@@ -28,6 +29,8 @@ class TownViewController: UIViewController, TownViewProtocol {
     
 	override func viewDidLoad() {
         super.viewDidLoad()
+        TownRouter.createModule(view: self)
+        
     //    townTableView.estimatedRowHeight = 100
     //    townTableView.rowHeight = UITableView.automaticDimension
     }
@@ -40,21 +43,23 @@ extension TownViewController:  UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        
+        let count = presenter?.count() ?? 0
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier:"TownTableViewCell", for: indexPath)
-        if let cell = cell as? TownTableViewCell {
-            cell.townTableViewCellDelegate = self
-            if indexPath.row > 0 {
-                
-                cell.configCell(text: "Киев", type: true, index: indexPath.row)
-            }
-            else {
-                cell.configCell(text: "Винница Винница Винница Винница Винница Винница Винница Винница Винница Винница Винница Винница Винница Винница ", type: false, index: indexPath.row)
-            }
+        if let cell = cell as? TownTableViewCellProtocol {
+            
+            let text = presenter?.getTextTownInfo(index: indexPath.row) ?? ""
+            let type = presenter?.getTypeTownInfo(index: indexPath.row) ?? false
+            let index = indexPath.row
+            
+            print(text, type, index)
+            
+            cell.configCell(text: text, type: type, index: index, delegate: self)
         }
         return cell
     }
@@ -67,7 +72,6 @@ extension TownViewController:  UITableViewDataSource {
 extension TownViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        
     }
 }
 
@@ -77,6 +81,4 @@ extension TownViewController: TownTableViewCellDelegate {
         presenter?.actionCellButton(index: index)
   
     }
-    
-    
 }

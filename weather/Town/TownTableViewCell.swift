@@ -16,9 +16,9 @@ class TownTableViewCell: UITableViewCell, TownTableViewCellProtocol {
     
     @IBOutlet weak var tawnLabel: UILabel!
     @IBOutlet weak var openButton: UIButton!
+        
     @IBAction func openButtonAction(_ sender: UIButton) {
         self.townTableViewCellDelegate?.getIndex(index: presenter?.index)
-    
     }
 
     override func awakeFromNib() {
@@ -34,17 +34,18 @@ class TownTableViewCell: UITableViewCell, TownTableViewCellProtocol {
         // Configure the view for the selected state
     }
 
-    func configCell(text: String, type: Bool, index: Int) {
+    func configCell(text: String, type: Bool, index: Int, delegate: TownTableViewCellDelegate) {
         
+        townTableViewCellDelegate = delegate
         presenter?.index = index
-        
-        tawnLabel.text = text + String(index)
-       
+        tawnLabel.text = text
         if type {
             openButton.titleLabel?.text = "V"
+            print("V")
         }
         else {
             openButton.titleLabel?.text = "^"
+            print("^")
         }
     }
 }

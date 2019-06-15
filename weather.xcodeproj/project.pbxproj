@@ -10,6 +10,11 @@
 		A43EF24822B3C87900C8B793 /* TownTablePresenterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43EF24722B3C87900C8B793 /* TownTablePresenterCell.swift */; };
 		A460747222B3973800FDCAE1 /* TownTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A460747122B3973800FDCAE1 /* TownTableViewCell.swift */; };
 		A460747422B3975200FDCAE1 /* WeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A460747322B3975200FDCAE1 /* WeatherTableViewCell.swift */; };
+		A461A11A22B4DF8400F20DD4 /* TownModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A461A11922B4DF8400F20DD4 /* TownModel.swift */; };
+		A461A11C22B4DFB500F20DD4 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A461A11B22B4DFB500F20DD4 /* WeatherModel.swift */; };
+		A461A11E22B4DFEC00F20DD4 /* DataBaseServise.swift in Sources */ = {isa = PBXBuildFile; fileRef = A461A11D22B4DFEC00F20DD4 /* DataBaseServise.swift */; };
+		A461A12022B4E01000F20DD4 /* NetworkServiceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A461A11F22B4E01000F20DD4 /* NetworkServiceAPI.swift */; };
+		A461A12222B4E9B600F20DD4 /* DateBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A461A12122B4E9B600F20DD4 /* DateBaseModel.swift */; };
 		A46A21BF22AFEC55002494C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46A21BE22AFEC55002494C5 /* AppDelegate.swift */; };
 		A46A21C122AFEC55002494C5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46A21C022AFEC55002494C5 /* ViewController.swift */; };
 		A46A21C422AFEC55002494C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A46A21C222AFEC55002494C5 /* Main.storyboard */; };
@@ -53,6 +58,11 @@
 		A43EF24722B3C87900C8B793 /* TownTablePresenterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownTablePresenterCell.swift; sourceTree = "<group>"; };
 		A460747122B3973800FDCAE1 /* TownTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownTableViewCell.swift; sourceTree = "<group>"; };
 		A460747322B3975200FDCAE1 /* WeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTableViewCell.swift; sourceTree = "<group>"; };
+		A461A11922B4DF8400F20DD4 /* TownModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownModel.swift; sourceTree = "<group>"; };
+		A461A11B22B4DFB500F20DD4 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		A461A11D22B4DFEC00F20DD4 /* DataBaseServise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseServise.swift; sourceTree = "<group>"; };
+		A461A11F22B4E01000F20DD4 /* NetworkServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceAPI.swift; sourceTree = "<group>"; };
+		A461A12122B4E9B600F20DD4 /* DateBaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateBaseModel.swift; sourceTree = "<group>"; };
 		A46A21BB22AFEC55002494C5 /* weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A46A21BE22AFEC55002494C5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A46A21C022AFEC55002494C5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +119,7 @@
 		A460747022B391BF00FDCAE1 /* NetworkService */ = {
 			isa = PBXGroup;
 			children = (
+				A461A11F22B4E01000F20DD4 /* NetworkServiceAPI.swift */,
 			);
 			path = NetworkService;
 			sourceTree = "<group>";
@@ -178,9 +189,9 @@
 				A4EAF97B22B01A79009A1C4C /* TownProtocols.swift */,
 				A4EAF97C22B01A79009A1C4C /* TownRouter.swift */,
 				A4EAF97D22B01A79009A1C4C /* TownViewController.swift */,
-				A4EAF97E22B01A79009A1C4C /* TownViewController.xib */,
 				A460747122B3973800FDCAE1 /* TownTableViewCell.swift */,
 				A43EF24722B3C87900C8B793 /* TownTablePresenterCell.swift */,
+				A4EAF97E22B01A79009A1C4C /* TownViewController.xib */,
 			);
 			path = Town;
 			sourceTree = "<group>";
@@ -202,6 +213,9 @@
 		A4EAF98522B02263009A1C4C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A461A11922B4DF8400F20DD4 /* TownModel.swift */,
+				A461A11B22B4DFB500F20DD4 /* WeatherModel.swift */,
+				A461A12122B4E9B600F20DD4 /* DateBaseModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -209,6 +223,7 @@
 		A4EAF98622B022B1009A1C4C /* DataService */ = {
 			isa = PBXGroup;
 			children = (
+				A461A11D22B4DFEC00F20DD4 /* DataBaseServise.swift */,
 			);
 			path = DataService;
 			sourceTree = "<group>";
@@ -348,20 +363,25 @@
 			files = (
 				A460747422B3975200FDCAE1 /* WeatherTableViewCell.swift in Sources */,
 				A4EAF98022B01A79009A1C4C /* TownPresenter.swift in Sources */,
+				A461A12222B4E9B600F20DD4 /* DateBaseModel.swift in Sources */,
 				A4EAF97322B01755009A1C4C /* WeatherProtocols.swift in Sources */,
 				A4EAF97222B01755009A1C4C /* WeatherPresenter.swift in Sources */,
+				A461A11C22B4DFB500F20DD4 /* WeatherModel.swift in Sources */,
 				A4EAF97F22B01A79009A1C4C /* TownInteractor.swift in Sources */,
 				A46A21C722AFEC55002494C5 /* weather.xcdatamodeld in Sources */,
 				A4EAF97122B01755009A1C4C /* WeatherInteractor.swift in Sources */,
+				A461A11A22B4DF8400F20DD4 /* TownModel.swift in Sources */,
 				A4EAF97422B01755009A1C4C /* WeatherRouter.swift in Sources */,
 				A4EAF97522B01755009A1C4C /* WeatherViewController.swift in Sources */,
 				A4EAF98222B01A79009A1C4C /* TownRouter.swift in Sources */,
 				A46A21C122AFEC55002494C5 /* ViewController.swift in Sources */,
 				A4EAF98122B01A79009A1C4C /* TownProtocols.swift in Sources */,
+				A461A11E22B4DFEC00F20DD4 /* DataBaseServise.swift in Sources */,
 				A46A21BF22AFEC55002494C5 /* AppDelegate.swift in Sources */,
 				A4EAF98322B01A79009A1C4C /* TownViewController.swift in Sources */,
 				A460747222B3973800FDCAE1 /* TownTableViewCell.swift in Sources */,
 				A43EF24822B3C87900C8B793 /* TownTablePresenterCell.swift in Sources */,
+				A461A12022B4E01000F20DD4 /* NetworkServiceAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

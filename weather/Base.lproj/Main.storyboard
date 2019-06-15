@@ -217,6 +217,9 @@
                                         <state key="normal" title="Назад">
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </state>
+                                        <connections>
+                                            <action selector="beckButtonAction:" destination="NvR-z6-seg" eventType="touchUpInside" id="rZp-ep-bDa"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.58430534601211548" green="0.91942155361175537" blue="0.89044839143753052" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -242,6 +245,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NhG-oV-NVH"/>
                     </view>
+                    <connections>
+                        <outlet property="backButton" destination="fK1-zB-klD" id="aTJ-hj-xZC"/>
+                        <outlet property="tatleLabel" destination="2Wb-gA-X8K" id="TMK-vk-EM7"/>
+                        <outlet property="weatherTableView" destination="gMc-m4-gSn" id="iJS-KT-0Nb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Up-ta-BcZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

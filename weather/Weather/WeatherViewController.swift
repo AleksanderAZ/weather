@@ -14,6 +14,16 @@ class WeatherViewController: UIViewController, WeatherViewProtocol {
 
 	var presenter: WeatherPresenterProtocol?
 
+    @IBOutlet weak var backButton: UIButton!
+   
+    @IBAction func beckButtonAction(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBOutlet weak var weatherTableView: UITableView!
+    
+    @IBOutlet weak var tatleLabel: UILabel!
+    
 	override func viewDidLoad() {
         super.viewDidLoad()
     }

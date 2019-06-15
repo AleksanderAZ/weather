@@ -16,7 +16,13 @@ protocol TownWireframeProtocol: class {
 }
 //MARK: Presenter -
 protocol TownPresenterProtocol: class {
+    var townModel: [TownModel]? {get set}
+    
+    func count()->Int?
     func actionCellButton(index: Int?)
+    func getTextTownInfo(index: Int)->String
+    func getTypeTownInfo(index: Int)->Bool
+    
 }
 
 //MARK: Interactor -
@@ -39,6 +45,7 @@ protocol TownTableViewCellDelegate: class {
 protocol TownTableViewCellProtocol: class {
     
     var presenter: TownTablePresenterCellProtocol?  { get set }
+    func configCell(text: String, type: Bool, index: Int, delegate: TownTableViewCellDelegate)
 }
 
 protocol TownTablePresenterCellProtocol: class {

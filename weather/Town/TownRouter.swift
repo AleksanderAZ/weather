@@ -14,9 +14,9 @@ class TownRouter: TownWireframeProtocol {
     
     weak var viewController: UIViewController?
     
-    static func createModule() -> UIViewController {
+    static func createModule(view: TownViewController) {
         // Change to get view from storyboard if not using progammatic UI
-        let view = TownViewController(nibName: nil, bundle: nil)
+        let view = view
         let interactor = TownInteractor()
         let router = TownRouter()
         let presenter = TownPresenter(interface: view, interactor: interactor, router: router)
@@ -24,7 +24,5 @@ class TownRouter: TownWireframeProtocol {
         view.presenter = presenter
         interactor.presenter = presenter
         router.viewController = view
-        
-        return view
     }
 }
