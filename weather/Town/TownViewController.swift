@@ -71,7 +71,7 @@ extension TownViewController:  UITableViewDataSource {
 
 extension TownViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        presenter?.showWeatherView()
     }
 }
 

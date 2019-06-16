@@ -61,7 +61,13 @@ class TownPresenter: TownPresenterProtocol {
         print(index)
     }
     
+    func showWeatherView() {
+        router.showWeatherView()
+    }
+    
+    
     deinit {
         townModel?.removeAll()
+        print("exit")
     }
 }

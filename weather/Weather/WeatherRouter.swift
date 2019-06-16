@@ -16,10 +16,12 @@ class WeatherRouter: WeatherWireframeProtocol {
     
     static func createModule() -> UIViewController {
         // Change to get view from storyboard if not using progammatic UI
-        let view = WeatherViewController(nibName: nil, bundle: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let view = storyboard.instantiateViewController(withIdentifier: "WeatherViewController") as! WeatherViewController
+        //let view = WeatherViewController(nibName: "WeatherViewController", bundle: nil)
         let interactor = WeatherInteractor()
         let router = WeatherRouter()
-        let presenter = WeatherPresenter(interface: view, interactor: interactor, router: router)
+        let presenter = WeatherPresenter(interface: view as WeatherViewProtocol, interactor: interactor, router: router)
         
         view.presenter = presenter
         interactor.presenter = presenter

@@ -25,4 +25,9 @@ class TownRouter: TownWireframeProtocol {
         interactor.presenter = presenter
         router.viewController = view
     }
+    
+    func showWeatherView() {
+        let view = WeatherRouter.createModule()
+        self.viewController?.navigationController?.pushViewController(view, animated: true)
+    }
 }

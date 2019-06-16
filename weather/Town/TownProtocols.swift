@@ -12,16 +12,18 @@ import Foundation
 
 //MARK: Wireframe -
 protocol TownWireframeProtocol: class {
-
+    func showWeatherView()
 }
 //MARK: Presenter -
 protocol TownPresenterProtocol: class {
+    
     var townModel: [TownModel]? {get set}
     
     func count()->Int?
     func actionCellButton(index: Int?)
     func getTextTownInfo(index: Int)->String
     func getTypeTownInfo(index: Int)->Bool
+    func showWeatherView()
     
 }
 
