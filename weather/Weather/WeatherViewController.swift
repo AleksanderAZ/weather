@@ -20,6 +20,8 @@ class WeatherViewController: UIViewController, WeatherViewProtocol {
     
 	override func viewDidLoad() {
         super.viewDidLoad()
+        tatleLabel.text = presenter?.getTitle()
+        
     }
 
 }
@@ -30,19 +32,26 @@ extension WeatherViewController:  UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return presenter?.count() ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier:"WeatherTableViewCell", for: indexPath)
+        
+        if let cell = cell as? WeatherTableViewCellProtocol {
+            
+            let text = presenter?.getTextWeatherInfo(index: indexPath.row) ?? ""
+            
+            cell.configCell(text: text)
+        }
+        
         return cell
     }
 }
 
 extension WeatherViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
+    
     }
 }

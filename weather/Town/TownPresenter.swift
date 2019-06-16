@@ -61,8 +61,9 @@ class TownPresenter: TownPresenterProtocol {
         print(index)
     }
     
-    func showWeatherView() {
-        router.showWeatherView()
+    func showWeatherView(indexCell: Int) {
+        guard let nameTown = townModel?[indexCell].name else { return }
+        router.showWeatherView(nameTown: nameTown)
     }
     
     

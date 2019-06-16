@@ -177,7 +177,6 @@
         <!--Weather forecast-->
         <scene sceneID="Kve-y1-yot">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5Up-ta-BcZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="WeatherViewController" title="Weather forecast" id="NvR-z6-seg" customClass="WeatherViewController" customModule="weather" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2X4-Fh-v2L">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -217,6 +216,9 @@
                                                         <constraint firstItem="tG1-Uc-Nzh" firstAttribute="leading" secondItem="VOL-ve-8Xh" secondAttribute="leadingMargin" constant="8" id="qKN-Q3-WOO"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="weatherLabel" destination="tG1-Uc-Nzh" id="kvY-hI-aBf"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                         <connections>
@@ -250,6 +252,7 @@
                         <outlet property="weatherTableView" destination="gMc-m4-gSn" id="iJS-KT-0Nb"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Up-ta-BcZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="888.79999999999995" y="26.53673163418291"/>
         </scene>

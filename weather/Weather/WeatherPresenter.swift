@@ -15,11 +15,39 @@ class WeatherPresenter: WeatherPresenterProtocol {
     weak private var view: WeatherViewProtocol?
     var interactor: WeatherInteractorProtocol?
     private let router: WeatherWireframeProtocol
-
+    
+    var nameTown: String?
+    var weatherModel: [WeatherModel]?
+    
     init(interface: WeatherViewProtocol, interactor: WeatherInteractorProtocol?, router: WeatherWireframeProtocol) {
         self.view = interface
         self.interactor = interactor
         self.router = router
-    }
 
+        weatherModel = [WeatherModel]()
+        
+        weatherModel?.append(WeatherModel(weatherForecast: "rain"))
+        weatherModel?.append(WeatherModel(weatherForecast: "sun"))
+    }
+    
+    func count()->Int? {
+        return weatherModel?.count
+    }
+    
+    func getTitle()->String {
+        
+        let title = nameTown ?? ""
+        return title
+    }
+    
+    func getTextWeatherInfo(index: Int)->String {
+        
+        let weatherForecast = (weatherModel?[index].weatherForecast ?? "") + (nameTown ?? "")
+        return weatherForecast
+    }
+    
+    deinit {
+        weatherModel?.removeAll()
+        print("exit")
+    }
 }

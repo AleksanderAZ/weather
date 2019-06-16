@@ -14,7 +14,7 @@ class WeatherRouter: WeatherWireframeProtocol {
     
     weak var viewController: UIViewController?
     
-    static func createModule() -> UIViewController {
+    static func createModule(nameTown: String) -> UIViewController {
         // Change to get view from storyboard if not using progammatic UI
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let view = storyboard.instantiateViewController(withIdentifier: "WeatherViewController") as! WeatherViewController
@@ -22,7 +22,7 @@ class WeatherRouter: WeatherWireframeProtocol {
         let interactor = WeatherInteractor()
         let router = WeatherRouter()
         let presenter = WeatherPresenter(interface: view as WeatherViewProtocol, interactor: interactor, router: router)
-        
+        presenter.nameTown = nameTown
         view.presenter = presenter
         interactor.presenter = presenter
         router.viewController = view

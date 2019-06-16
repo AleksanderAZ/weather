@@ -10,6 +10,9 @@ import UIKit
 
 class WeatherTableViewCell: UITableViewCell, WeatherTableViewCellProtocol {
 
+
+    @IBOutlet weak var weatherLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,5 +22,12 @@ class WeatherTableViewCell: UITableViewCell, WeatherTableViewCellProtocol {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    
+    func configCell(text: String) {
+        
+        weatherLabel.text = text
+      
     }
 }

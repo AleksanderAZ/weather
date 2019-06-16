@@ -10,5 +10,5 @@ import Foundation
 
 struct WeatherModel {
     
-    var weatherForecast: [String]?
+    var weatherForecast: String
 }

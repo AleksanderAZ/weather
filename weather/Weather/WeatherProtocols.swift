@@ -17,6 +17,10 @@ protocol WeatherWireframeProtocol: class {
 //MARK: Presenter -
 protocol WeatherPresenterProtocol: class {
 
+    func count()->Int?
+    func getTextWeatherInfo(index: Int)->String
+    func getTitle()->String
+    
 }
 
 //MARK: Interactor -
@@ -32,5 +36,5 @@ protocol WeatherViewProtocol: class {
 }
 
 protocol WeatherTableViewCellProtocol: class {
-    
+    func configCell(text: String)
 }
