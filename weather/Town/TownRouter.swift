@@ -12,7 +12,7 @@ import UIKit
 
 class TownRouter: TownWireframeProtocol {
     
-    weak var viewController: UIViewController?
+    weak var viewController: TownViewController? // UIViewController?
     
     static func createModule(view: TownViewController) {
         // Change to get view from storyboard if not using progammatic UI

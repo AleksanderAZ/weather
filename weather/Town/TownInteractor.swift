@@ -13,4 +13,43 @@ import UIKit
 class TownInteractor: TownInteractorProtocol {
 
     weak var presenter: TownPresenterProtocol?
+    
+    private var townModel: [TownModel]?
+    
+    func loadTown(completion: @escaping ([TownModel]?)->()) {
+        
+        townModel = [TownModel]()
+        
+        townModel?.append(TownModel(name: "Vinnitsa", temperature: "28", townFullInfo: "x=123 y=23 reg=fjfjjfjfj", typeInfo: false))
+        townModel?.append(TownModel(name: "Kyiv", temperature: "31", townFullInfo: "xxxxx=124645643 yyyyyy=246575673 reg=gref dfgdgrr jfjjfjfj", typeInfo: false))
+        completion(townModel)
+    }
+    
+    func getTown(completion: @escaping ([TownModel]?)->()) {
+        
+        if let townModel = self.townModel {
+            completion(townModel)
+        }
+        else {
+            self.loadTown() { [weak self] (towns: [TownModel]?) in
+                self?.townModel = towns
+                completion(towns)
+            }
+        }
+    }
+    
+    func addTown(name: String, completion: @escaping ([TownModel]?)->()) {
+        
+        if let _l = self.townModel {
+            self.townModel?.append(TownModel(name: name, temperature: "31", townFullInfo: "xxxxx=124645643 yyyyyy=246575673 reg=gref dfgdgrr jfjjfjfj", typeInfo: false))
+            completion(self.townModel)
+        }
+        else {
+            self.loadTown() { [weak self] (towns: [TownModel]?) in
+                self?.townModel = towns
+                self?.townModel?.append(TownModel(name: name, temperature: "31", townFullInfo: "xxxxx=124645643 yyyyyy=246575673 reg=gref dfgdgrr jfjjfjfj", typeInfo: false))
+                completion(self?.townModel)
+            }
+        }
+    }
 }

@@ -22,32 +22,23 @@ protocol TownPresenterProtocol: class {
     func getTextTownInfo(index: Int)->String
     func getTypeTownInfo(index: Int)->Bool
     func showWeatherView(indexCell: Int)
+    func choiceTown(townName: String?)
+    func addTown(townName: String?)
 }
 
 //MARK: Interactor -
 protocol TownInteractorProtocol: class {
 
   var presenter: TownPresenterProtocol?  { get set }
+    
+  func getTown(completion: @escaping ([TownModel]?)->())
+    func addTown(name: String, completion: @escaping ([TownModel]?)->())
 }
 
 //MARK: View -
 protocol TownViewProtocol: class {
 
-  var presenter: TownPresenterProtocol?  { get set }
-}
-
-protocol TownTableViewCellDelegate: class {
-    func getIndex(index: Int?)  //ShoppingCart
-}
-
-
-protocol TownTableViewCellProtocol: class {
-    
-    var presenter: TownTablePresenterCellProtocol?  { get set }
-    func configCell(text: String, type: Bool, index: Int, delegate: TownTableViewCellDelegate)
-}
-
-protocol TownTablePresenterCellProtocol: class {
-    var index: Int? {get set}
+    var presenter: TownPresenterProtocol?  { get set }
+    func update()
 }
 

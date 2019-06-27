@@ -14,15 +14,16 @@ class TownViewController: UIViewController, TownViewProtocol {
 
 	var presenter: TownPresenterProtocol?
     
-    
     @IBOutlet weak var townTextField: UITextField!
     
     @IBAction func townTextFieldEdit(_ sender: UITextField) {
+        presenter?.choiceTown(townName: sender.text)
     }
     
     @IBOutlet weak var addButton: UIButton!
     
     @IBAction func addButtonAction(_ sender: UIButton) {
+        presenter?.addTown(townName: townTextField.text)
     }
     
     @IBOutlet weak var townTableView: UITableView!
@@ -34,7 +35,12 @@ class TownViewController: UIViewController, TownViewProtocol {
     //    townTableView.estimatedRowHeight = 100
     //    townTableView.rowHeight = UITableView.automaticDimension
     }
-
+    
+    func update() {
+        DispatchQueue.main.async {
+            self.townTableView.reloadData()
+        }
+    }
 }
 
 extension TownViewController:  UITableViewDataSource {
@@ -50,17 +56,17 @@ extension TownViewController:  UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier:"TownTableViewCell", for: indexPath)
+        let text = presenter?.getTextTownInfo(index: indexPath.row) ?? ""
+        let type = presenter?.getTypeTownInfo(index: indexPath.row) ?? false
+        let index = indexPath.row
+        
+        let cell = TownCellRouter.createModule(tableView, indexPath: indexPath)
+        
+        //let cell = tableView.dequeueReusableCell(withIdentifier:"TownTableViewCell", for: indexPath)
         if let cell = cell as? TownTableViewCellProtocol {
-            
-            let text = presenter?.getTextTownInfo(index: indexPath.row) ?? ""
-            let type = presenter?.getTypeTownInfo(index: indexPath.row) ?? false
-            let index = indexPath.row
-            
-            print(text, type, index)
-            
             cell.configCell(text: text, type: type, index: index, delegate: self)
         }
+        
         return cell
     }
     

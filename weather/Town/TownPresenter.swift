@@ -14,7 +14,6 @@ class TownPresenter: TownPresenterProtocol {
     
     var townModel: [TownModel]?
     
-
     weak private var view: TownViewProtocol?
     var interactor: TownInteractorProtocol?
     private let router: TownWireframeProtocol
@@ -22,18 +21,29 @@ class TownPresenter: TownPresenterProtocol {
     
     init(interface: TownViewProtocol, interactor: TownInteractorProtocol?, router: TownWireframeProtocol) {
         
-       
         self.view = interface
         self.interactor = interactor
         self.router = router
         
-        townModel = [TownModel]()
-        
-        townModel?.append(TownModel(name: "Vinnitsa", temperature: "28", townFullInfo: "x=123 y=23 reg=fjfjjfjfj", typeInfo: false))
-        townModel?.append(TownModel(name: "Kyiv", temperature: "31", townFullInfo: "xxxxx=124645643 yyyyyy=246575673 reg=gref dfgdgrr jfjjfjfj", typeInfo: true))
-
+       
+        self.loadData(filtr: nil)
     }
 
+    func loadData(filtr: String?) {
+         
+       interactor?.getTown() { [weak self] (towns: [TownModel]?) in
+            self?.townModel = towns
+            if filtr != nil && filtr != "" {
+                self?.townModel = self?.townModel?.filter { (item) in
+                    guard let name = item.name else { return false }
+                    guard let filtr = filtr else { return false }
+                    return name.contains(filtr)
+                }
+            }
+            self?.view?.update()
+       }
+    }
+    
     func count()->Int? {
         return townModel?.count
     }
@@ -58,14 +68,34 @@ class TownPresenter: TownPresenterProtocol {
     }
     
     func actionCellButton(index: Int?) {
-        print(index)
+        guard let index = index else { return }
+        guard let type = townModel?[index].typeInfo else { return }
+        if type {
+           townModel?[index].typeInfo = false
+        } else {
+           townModel?[index].typeInfo = true
+        }
+        view?.update()
     }
     
     func showWeatherView(indexCell: Int) {
         guard let nameTown = townModel?[indexCell].name else { return }
         router.showWeatherView(nameTown: nameTown)
     }
-    
+
+    func choiceTown(townName: String?) {
+        loadData(filtr: townName)
+    }
+
+    func addTown(townName: String?) {
+        guard let name = townName else { return }
+        if name != "" {
+            interactor?.addTown(name: name) { [weak self] (towns: [TownModel]?) in
+                self?.townModel = towns
+                self?.loadData(filtr: name)
+            }
+        }
+    }
     
     deinit {
         townModel?.removeAll()
