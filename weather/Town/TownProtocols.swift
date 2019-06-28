@@ -19,7 +19,7 @@ protocol TownPresenterProtocol: class {
     
     func count()->Int?
     func actionCellButton(index: Int?)
-    func getTextTownInfo(index: Int)->String
+    func getTextTownInfo(index: Int)->(String, String)
     func getTypeTownInfo(index: Int)->Bool
     func showWeatherView(indexCell: Int)
     func choiceTown(townName: String?)

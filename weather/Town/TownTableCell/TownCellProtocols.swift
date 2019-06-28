@@ -20,7 +20,7 @@ protocol TownTableViewCellDelegate: class {
 protocol TownTableViewCellProtocol: class {
     
     var presenter: TownTablePresenterCellProtocol?  { get set }
-    func configCell(text: String, type: Bool, index: Int, delegate: TownTableViewCellDelegate)
+    func configCell(town: String, info: String, type: Bool, index: Int, delegate: TownTableViewCellDelegate)
 }
 
 protocol TownTablePresenterCellProtocol: class {

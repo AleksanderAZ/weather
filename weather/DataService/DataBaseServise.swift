@@ -15,7 +15,7 @@ class TownDataBase: TownDataBaseProtocol {
     let uiRealm = try! Realm()
     
     init() {
-  //      deleteDB()
+ //       deleteDB()
     }
     
     private func deleteDB() {

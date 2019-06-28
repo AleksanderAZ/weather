@@ -56,7 +56,7 @@ extension TownViewController:  UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let text = presenter?.getTextTownInfo(index: indexPath.row) ?? ""
+        let (town, info) = presenter?.getTextTownInfo(index: indexPath.row) ?? ("", "")
         let type = presenter?.getTypeTownInfo(index: indexPath.row) ?? false
         let index = indexPath.row
         
@@ -64,7 +64,7 @@ extension TownViewController:  UITableViewDataSource {
         
         //let cell = tableView.dequeueReusableCell(withIdentifier:"TownTableViewCell", for: indexPath)
         if let cell = cell as? TownTableViewCellProtocol {
-            cell.configCell(text: text, type: type, index: index, delegate: self)
+            cell.configCell(town: town, info: info, type: type, index: index, delegate: self)
         }
         
         return cell

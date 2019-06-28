@@ -34,11 +34,28 @@ class TownTableViewCell: UITableViewCell, TownTableViewCellProtocol {
         // Configure the view for the selected state
     }
 
-    func configCell(text: String, type: Bool, index: Int, delegate: TownTableViewCellDelegate) {
+    func configCell(town: String, info: String, type: Bool, index: Int, delegate: TownTableViewCellDelegate) {
         
         townTableViewCellDelegate = delegate
         presenter?.indexCell = index
-        tawnLabel.text = text
+        
+        
+        let fontSize = tawnLabel.font.pointSize
+        let attribute = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize) ]
+        let boldAttribute = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: fontSize) ]
+        
+        
+        let townAttrString = NSAttributedString(string: town, attributes: boldAttribute)
+        let infoAttrString = NSAttributedString(string: info, attributes: attribute)
+        
+        let text = NSMutableAttributedString()
+        text.append(townAttrString)
+        text.append(infoAttrString)
+        
+        
+        // tawnLabel.text = text
+        tawnLabel.attributedText = text
+        
         if type {
             openButton.titleLabel?.text = "V"
             openButton.backgroundColor = .red
