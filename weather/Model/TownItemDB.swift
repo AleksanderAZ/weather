@@ -7,3 +7,8 @@
 //
 
 import Foundation
+import RealmSwift
+
+class TownItemDB: Object {
+    @objc dynamic var nameTown = ""
+}

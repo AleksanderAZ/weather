@@ -14,14 +14,18 @@ class TownInteractor: TownInteractorProtocol {
 
     weak var presenter: TownPresenterProtocol?
     
-    private var townModel: [TownModel]?
+    let townDataBase: TownDataBaseProtocol = TownDataBase()
+    
+    private var townModel: [TownModel]?  = [TownModel]()
     
     func loadTown(completion: @escaping ([TownModel]?)->()) {
         
-        townModel = [TownModel]()
-        
-        townModel?.append(TownModel(name: "Vinnitsa", temperature: "28", townFullInfo: "x=123 y=23 reg=fjfjjfjfj", typeInfo: false))
-        townModel?.append(TownModel(name: "Kyiv", temperature: "31", townFullInfo: "xxxxx=124645643 yyyyyy=246575673 reg=gref dfgdgrr jfjjfjfj", typeInfo: false))
+        let count = townDataBase.count()
+        townModel?.removeAll()
+        for index in 0..<count {
+            let item = townDataBase.getItem(index: index)
+            townModel?.append(TownModel(name: item, temperature:String(20+index), townFullInfo: "Additional information: x=1 y=2 reg=xxxxxxxxxxxxxxxxx", typeInfo: false))
+        }
         completion(townModel)
     }
     
@@ -40,15 +44,18 @@ class TownInteractor: TownInteractorProtocol {
     
     func addTown(name: String, completion: @escaping ([TownModel]?)->()) {
         
-        if let _l = self.townModel {
-            self.townModel?.append(TownModel(name: name, temperature: "31", townFullInfo: "xxxxx=124645643 yyyyyy=246575673 reg=gref dfgdgrr jfjjfjfj", typeInfo: false))
-            completion(self.townModel)
+        let itemsTowns = self.townModel?.filter { (item) in
+            guard let itemName = item.name else { return false }
+            return (name == itemName)
         }
-        else {
+        
+        let isTowns = itemsTowns?.count
+        
+        if  isTowns == 0 {
+            townDataBase.addItem(item: name)
             self.loadTown() { [weak self] (towns: [TownModel]?) in
                 self?.townModel = towns
-                self?.townModel?.append(TownModel(name: name, temperature: "31", townFullInfo: "xxxxx=124645643 yyyyyy=246575673 reg=gref dfgdgrr jfjjfjfj", typeInfo: false))
-                completion(self?.townModel)
+                completion(towns)
             }
         }
     }

@@ -25,7 +25,8 @@ class TownPresenter: TownPresenterProtocol {
         self.interactor = interactor
         self.router = router
         
-       
+        self.addTown(townName: "Vinnitsa")
+        self.addTown(townName: "Kiev")
         self.loadData(filtr: nil)
     }
 
@@ -52,6 +53,13 @@ class TownPresenter: TownPresenterProtocol {
         
         let town = townModel?[index].name ?? ""
         let tempr = townModel?[index].temperature ?? ""
+       
+       // let text = NSMutableAttributedString(string: "The value is: ")
+       // text.appendAttributedString(NSAttributedString(string: "wwwwww", attributes: [NSFontAttributeName:UIFont.boldSystemFontOfSize(UIFont.systemFontSize())]))
+        
+      //  let attriString = NSAttributedString(string:"attriString", attributes:
+       //     [NSAttributedString.Key.foregroundColor: UIColor.lightGray,
+       //      NSAttributedString.Key.font: AttriFont])
         
         if getTypeTownInfo(index: index) {
             return town + " " + tempr
