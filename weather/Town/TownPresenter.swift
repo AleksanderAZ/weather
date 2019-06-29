@@ -26,9 +26,9 @@ class TownPresenter: TownPresenterProtocol {
         self.router = router
         
 
-        self.loadData(filtr: nil)
-        self.addTown(townName: "Vinnitsa")
-        self.addTown(townName: "Kiev")
+
+     //   self.addTown(townName: "Vinnitsa")
+     //   self.addTown(townName: "Kiev")
         self.loadData(filtr: nil)
     }
 
@@ -94,7 +94,6 @@ class TownPresenter: TownPresenterProtocol {
         guard let name = townName else { return }
         if name != "" {
             interactor?.addTown(name: name) { [weak self] (towns: [TownModel]?) in
-                self?.townModel = towns
                 self?.loadData(filtr: name)
             }
         }

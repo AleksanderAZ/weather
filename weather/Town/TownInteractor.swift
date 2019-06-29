@@ -16,17 +16,28 @@ class TownInteractor: TownInteractorProtocol {
     
     let townDataBase: TownDataBaseProtocol = TownDataBase()
     
-    private var townModel: [TownModel]?  = [TownModel]()
+    private var townModel: [TownModel]?
     
     func loadTown(completion: @escaping ([TownModel]?)->()) {
         
+        var countResult = 0
         let count = townDataBase.count()
         townModel?.removeAll()
         for index in 0..<count {
             let item = townDataBase.getItem(index: index)
-            townModel?.append(TownModel(name: item, temperature:String(20+index), townFullInfo: "Additional information: x=1 y=2 reg=xxxxxxxxxxxxxxxxx", typeInfo: false))
+            
+            loadTownInfo(nameTown: item) { [weak self] (name: String?, tempr: String?, info: String?) in
+                print("-----",item,"--",name," ",tempr)
+                self?.townModel?.append(TownModel(name: item, temperature: tempr, townFullInfo: info, typeInfo: false))
+                countResult = countResult + 1
+                print(countResult, count)
+                if countResult >= count {
+                    print(self?.townModel)
+                    completion(self?.townModel)
+                }
+            }
         }
-        completion(townModel)
+        
     }
     
     func getTown(completion: @escaping ([TownModel]?)->()) {
@@ -35,6 +46,7 @@ class TownInteractor: TownInteractorProtocol {
             completion(townModel)
         }
         else {
+            self.townModel = [TownModel]()
             self.loadTown() { [weak self] (towns: [TownModel]?) in
                 self?.townModel = towns
                 completion(towns)
@@ -49,14 +61,28 @@ class TownInteractor: TownInteractorProtocol {
             return (name == itemName)
         }
         
-        let isTowns = itemsTowns?.count
-        
+        let isTowns = itemsTowns?.count ?? 0
+        print(isTowns)
         if  isTowns == 0 {
             townDataBase.addItem(item: name)
             self.loadTown() { [weak self] (towns: [TownModel]?) in
                 self?.townModel = towns
-                completion(towns)
+                completion(nil)
             }
+        }
+    }
+    
+    func loadTownInfo(nameTown: String, completion: @escaping (String?, String?, String?)->()) {
+        
+        NetworkServiceAPI.shared.weatherAPIRequest(nameTown: nameTown) { [weak self] (result: WeatherAPIModel?) in
+            
+            guard let result = result else { return }
+            
+            let name = result.name! + " name"
+            let tempr = result.name! + " tempr"
+            let info = result.name! + " info"
+            
+            completion(name, tempr, info)
         }
     }
 }

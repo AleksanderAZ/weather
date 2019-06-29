@@ -15,7 +15,15 @@ class TownDataBase: TownDataBaseProtocol {
     let uiRealm = try! Realm()
     
     init() {
- //       deleteDB()
+       deleteDB()
+        
+        if uiRealm.objects(TownItemDB.self).filter("nameTown = 'Vinnitsa'").first == nil {
+            addItem(item: "Vinnitsa")
+        }
+
+        if uiRealm.objects(TownItemDB.self).filter("nameTown = 'Kiev'").first == nil {
+            addItem(item: "Kiev")
+        }
     }
     
     private func deleteDB() {
