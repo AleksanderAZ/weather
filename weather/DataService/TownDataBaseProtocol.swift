@@ -8,9 +8,7 @@
 
 import Foundation
 
-
 protocol TownDataBaseProtocol: class {
-    
     func getItem(index: Int)->String
     func count()->Int
     func addItem(item: String)

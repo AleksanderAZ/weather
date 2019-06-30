@@ -12,16 +12,12 @@ import Foundation
 import UIKit
 
 class TownCellRouter: TownCellWireframeProtocol {
-    
     weak var viewCell: UITableViewCell?
     
     static func createModule(_ tableView: UITableView, indexPath: IndexPath)->UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier:"TownTableViewCell", for: indexPath) as! TownTableViewCell
-
         let router = TownCellRouter()
         let interactor = TownTableCellInteractor()
-        
         let presenter = TownTablePresenterCell(interface: (cell as TownTableViewCellProtocol), interactor: interactor, router: router)
         
         cell.presenter = presenter

@@ -11,11 +11,9 @@
 import UIKit
 
 class WeatherPresenter: WeatherPresenterProtocol {
-
     weak private var view: WeatherViewProtocol?
     var interactor: WeatherInteractorProtocol?
     private let router: WeatherWireframeProtocol
-    
     var nameTown: String?
     var weatherModel: [WeatherModel]?
     
@@ -23,15 +21,12 @@ class WeatherPresenter: WeatherPresenterProtocol {
         self.view = interface
         self.interactor = interactor
         self.router = router
-
     }
     
     func updata(weather: [WeatherModel]?) {
         self.weatherModel = weather
-        print(weather)
         self.view?.update()
     }
-    
     
     func loadData() {
         guard let name = self.nameTown else { return }
@@ -40,19 +35,16 @@ class WeatherPresenter: WeatherPresenterProtocol {
         }
     }
     
-    
     func count()->Int? {
         return weatherModel?.count
     }
     
     func getTitle()->String {
-        
         let title = nameTown ?? ""
         return title
     }
     
     func getTextWeatherInfo(index: Int)->String {
-        
         let weatherForecast = (weatherModel?[index].weatherForecast ?? "")
         return weatherForecast
     }

@@ -11,29 +11,27 @@
 import UIKit
 
 class TownViewController: UIViewController, TownViewProtocol {
-
 	var presenter: TownPresenterProtocol?
     
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
     @IBOutlet weak var townTextField: UITextField!
+    @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var townTableView: UITableView!
     
     @IBAction func townTextFieldEdit(_ sender: UITextField) {
         presenter?.choiceTown(townName: sender.text)
     }
     
-    @IBOutlet weak var addButton: UIButton!
-    
     @IBAction func addButtonAction(_ sender: UIButton) {
         presenter?.addTown(townName: townTextField.text)
+        self.indicator.startAnimating()
     }
-    
-    @IBOutlet weak var townTableView: UITableView!
     
 	override func viewDidLoad() {
         super.viewDidLoad()
         TownRouter.createModule(view: self)
-        
-    //    townTableView.estimatedRowHeight = 100
-    //    townTableView.rowHeight = UITableView.automaticDimension
+        townTableView.estimatedRowHeight = 100
+        townTableView.rowHeight = UITableView.automaticDimension
     }
     
     func update() {
@@ -41,6 +39,28 @@ class TownViewController: UIViewController, TownViewProtocol {
             self.townTableView.reloadData()
             let sectionIndex = IndexSet(integer: 0)
             self.townTableView.reloadSections(sectionIndex, with: .none)
+            self.indicator.stopAnimating()
+        }
+    }
+    
+    func showMessage(title: String, text: String, action repeatHandler: @escaping ()->()) {
+        let alertAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            repeatHandler()
+        }
+        let controller = UIAlertController(title: title, message: text, preferredStyle: .alert)
+        controller.addAction(alertAction)
+
+        DispatchQueue.main.async {
+            self.present(controller, animated: true, completion: nil)
+        }
+    }
+    
+    func showError(text: String) {
+        DispatchQueue.main.async {
+            self.indicator.stopAnimating()
+            self.showMessage(title: "ERROR", text: text) { () in
+                
+            }
         }
     }
 }
@@ -51,43 +71,32 @@ extension TownViewController:  UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         let count = presenter?.count() ?? 0
         return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let (town, info) = presenter?.getTextTownInfo(index: indexPath.row) ?? ("", "")
         let type = presenter?.getTypeTownInfo(index: indexPath.row) ?? false
         let index = indexPath.row
-        
         let cell = TownCellRouter.createModule(tableView, indexPath: indexPath)
         
-        //let cell = tableView.dequeueReusableCell(withIdentifier:"TownTableViewCell", for: indexPath)
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         if let cell = cell as? TownTableViewCellProtocol {
             cell.configCell(town: town, info: info, type: type, index: index, delegate: self)
         }
-        
         return cell
     }
-    
- //   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-  //      return UITableView.automaticDimension
- //   }
 }
 
 extension TownViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
         presenter?.showWeatherView(indexCell: indexPath.row)
     }
 }
 
 extension TownViewController: TownTableViewCellDelegate {
     func getIndex(index: Int?) {
-
         presenter?.actionCellButton(index: index)
-  
     }
 }

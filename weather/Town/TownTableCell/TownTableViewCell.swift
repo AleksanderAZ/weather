@@ -10,50 +10,38 @@
 import UIKit
 
 class TownTableViewCell: UITableViewCell, TownTableViewCellProtocol {
-    
     var presenter: TownTablePresenterCellProtocol?
     weak var townTableViewCellDelegate: TownTableViewCellDelegate?
     
     @IBOutlet weak var tawnLabel: UILabel!
     @IBOutlet weak var openButton: UIButton!
-        
+    
     @IBAction func openButtonAction(_ sender: UIButton) {
         self.townTableViewCellDelegate?.getIndex(index: presenter?.indexCell)
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-
-        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
     func configCell(town: String, info: String, type: Bool, index: Int, delegate: TownTableViewCellDelegate) {
-        
         townTableViewCellDelegate = delegate
         presenter?.indexCell = index
-        
         
         let fontSize = tawnLabel.font.pointSize
         let attribute = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize) ]
         let boldAttribute = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: fontSize) ]
-        
-        
         let townAttrString = NSAttributedString(string: town, attributes: boldAttribute)
         let infoAttrString = NSAttributedString(string: info, attributes: attribute)
-        
         let text = NSMutableAttributedString()
+        
         text.append(townAttrString)
         text.append(infoAttrString)
         
-        
-        // tawnLabel.text = text
         tawnLabel.attributedText = text
         
         if type {
@@ -63,4 +51,5 @@ class TownTableViewCell: UITableViewCell, TownTableViewCellProtocol {
             openButton.backgroundColor = .green
         }
     }
+    
 }

@@ -17,16 +17,12 @@ class TownDataBase: TownDataBaseProtocol {
     var token: NotificationToken?
     
     init() {
-       //deleteDB()
-        
         if uiRealm.objects(TownItemDB.self).filter("nameTown = 'Vinnytsia'").first == nil {
             addItem(item: "Vinnytsia")
         }
-
         if uiRealm.objects(TownItemDB.self).filter("nameTown = 'Kiev'").first == nil {
             addItem(item: "Kiev")
         }
-        
         townsBD = self.uiRealm.objects(TownItemDB.self).sorted(by: { (lhsData, rhsData) -> Bool in
             return lhsData.nameTown > rhsData.nameTown
         })
@@ -39,10 +35,8 @@ class TownDataBase: TownDataBaseProtocol {
     }
     
     func addItem(item: String) {
-    
         let townItemDB = TownItemDB()
         townItemDB.nameTown = item
-        
         try! uiRealm.write() {
             uiRealm.add(townItemDB)
         }
@@ -56,7 +50,6 @@ class TownDataBase: TownDataBaseProtocol {
     }
     
     func getItem(index: Int)->String {
-        let towns = self.townsBD
         let item = self.townsBD?[index].nameTown
         return item ?? ""
     }

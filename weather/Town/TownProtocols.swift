@@ -16,7 +16,6 @@ protocol TownWireframeProtocol: class {
 }
 //MARK: Presenter -
 protocol TownPresenterProtocol: class {
-    
     func count()->Int?
     func actionCellButton(index: Int?)
     func getTextTownInfo(index: Int)->(String, String)
@@ -25,21 +24,22 @@ protocol TownPresenterProtocol: class {
     func choiceTown(townName: String?)
     func addTown(townName: String?)
     func updata(towns: [TownModel]?)
+    func error(text: String)
 }
 
 //MARK: Interactor -
 protocol TownInteractorProtocol: class {
-
-  var presenter: TownPresenterProtocol?  { get set }
+    var presenter: TownPresenterProtocol?  { get set }
     
-  func getTown(completion: @escaping ([TownModel]?)->())
+    func getTown(completion: @escaping ([TownModel]?)->())
     func addTown(name: String)
+    func error(text: String)
 }
 
 //MARK: View -
 protocol TownViewProtocol: class {
-
     var presenter: TownPresenterProtocol?  { get set }
     func update()
+    func showError(text: String)
 }
 

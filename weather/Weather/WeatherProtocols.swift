@@ -12,28 +12,23 @@ import Foundation
 
 //MARK: Wireframe -
 protocol WeatherWireframeProtocol: class {
-
 }
 //MARK: Presenter -
 protocol WeatherPresenterProtocol: class {
-
     func count()->Int?
     func getTextWeatherInfo(index: Int)->String
     func getTitle()->String
-    func loadData() 
-    
+    func loadData()
 }
 
 //MARK: Interactor -
 protocol WeatherInteractorProtocol: class {
-
     var presenter: WeatherPresenterProtocol?  { get set }
     func loadInfo(nameTown: String, completion: @escaping ([WeatherModel]?)->())
 }
 
 //MARK: View -
 protocol WeatherViewProtocol: class {
-
     var presenter: WeatherPresenterProtocol?  { get set }
     func update()
 }

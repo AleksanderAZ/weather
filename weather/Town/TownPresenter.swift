@@ -11,26 +11,16 @@
 import UIKit
 
 class TownPresenter: TownPresenterProtocol {
-
-    
     var townModel: [TownModel]?
-    
     weak private var view: TownViewProtocol?
     var interactor: TownInteractorProtocol?
     private let router: TownWireframeProtocol
     private var filtr: String?
     
-    
     init(interface: TownViewProtocol, interactor: TownInteractorProtocol?, router: TownWireframeProtocol) {
-        
         self.view = interface
         self.interactor = interactor
         self.router = router
-        
-
-
-     //   self.addTown(townName: "Vinnitsa")
-     //   self.addTown(townName: "Kiev")
         self.loadData(filtr: nil)
     }
 
@@ -44,6 +34,10 @@ class TownPresenter: TownPresenterProtocol {
             }
         }
         self.view?.update()
+    }
+    
+    func error(text: String) {
+        self.view?.showError(text: text)
     }
     
     

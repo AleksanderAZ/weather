@@ -53,7 +53,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ghB-40-1b7">
                                                         <rect key="frame" x="0.0" y="20.5" width="359" height="30"/>
                                                         <subviews>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Введите назвение города" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="j8d-xV-d0U">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="input city name" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="j8d-xV-d0U">
                                                                 <rect key="frame" x="0.0" y="0.0" width="251" height="30"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -95,15 +95,15 @@
                                         <rect key="frame" x="8" y="66.5" width="359" height="528.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TownTableViewCell" rowHeight="153" id="TS2-Cf-Qqg" customClass="TownTableViewCell" customModule="weather" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="359" height="153"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TownTableViewCell" rowHeight="66" id="TS2-Cf-Qqg" customClass="TownTableViewCell" customModule="weather" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="359" height="66"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TS2-Cf-Qqg" id="iUs-O2-nNO">
-                                                    <rect key="frame" x="0.0" y="0.0" width="359" height="152.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="359" height="65.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fx3-4K-gHq">
-                                                            <rect key="frame" x="8" y="8" width="305" height="136.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fx3-4K-gHq">
+                                                            <rect key="frame" x="8" y="8" width="305" height="47"/>
                                                             <attributedString key="attributedText">
                                                                 <fragment content="Label">
                                                                     <attributes>
@@ -130,7 +130,8 @@
                                                         <constraint firstItem="A4r-oj-pwx" firstAttribute="leading" secondItem="Fx3-4K-gHq" secondAttribute="trailing" constant="8" id="0e9-oS-d8w"/>
                                                         <constraint firstItem="Fx3-4K-gHq" firstAttribute="top" secondItem="iUs-O2-nNO" secondAttribute="top" constant="8" id="6Sh-tT-dRk"/>
                                                         <constraint firstItem="Fx3-4K-gHq" firstAttribute="leading" secondItem="iUs-O2-nNO" secondAttribute="leading" constant="8" id="6Xn-By-rhO"/>
-                                                        <constraint firstAttribute="bottom" secondItem="Fx3-4K-gHq" secondAttribute="bottom" constant="8" id="7qY-eR-RQX"/>
+                                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Fx3-4K-gHq" secondAttribute="bottom" constant="8" id="7qY-eR-RQX"/>
+                                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="A4r-oj-pwx" secondAttribute="bottom" constant="8" id="GUh-nP-gg0"/>
                                                         <constraint firstItem="A4r-oj-pwx" firstAttribute="top" secondItem="iUs-O2-nNO" secondAttribute="top" constant="8" id="J9e-BP-QRa"/>
                                                         <constraint firstAttribute="trailing" secondItem="A4r-oj-pwx" secondAttribute="trailing" constant="8" id="OXV-6f-P75"/>
                                                     </constraints>
@@ -158,19 +159,28 @@
                                     <constraint firstAttribute="trailing" secondItem="KOp-bF-eBo" secondAttribute="trailing" constant="8" id="qIX-bS-qY0"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="NuU-EY-GOR">
+                                <rect key="frame" x="0.0" y="32" width="375" height="667"/>
+                                <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="pkY-E8-CPf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="C4c-GQ-hcb"/>
                             <constraint firstItem="pkY-E8-CPf" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="N42-oX-gVa"/>
                             <constraint firstItem="pkY-E8-CPf" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="T8g-BX-JTo"/>
+                            <constraint firstItem="NuU-EY-GOR" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="cA0-fc-Fah"/>
                             <constraint firstItem="pkY-E8-CPf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="gYr-DQ-ywr"/>
+                            <constraint firstItem="NuU-EY-GOR" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="jOL-3H-0eS"/>
+                            <constraint firstItem="NuU-EY-GOR" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="uW4-bI-acb"/>
+                            <constraint firstItem="NuU-EY-GOR" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="v5X-qc-lPI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="AR1-hQ-tuN"/>
                     <connections>
                         <outlet property="addButton" destination="tqh-me-FNE" id="4rs-JR-wwt"/>
+                        <outlet property="indicator" destination="NuU-EY-GOR" id="fWl-Up-lEw"/>
                         <outlet property="townTableView" destination="KOp-bF-eBo" id="89H-QT-6fu"/>
                         <outlet property="townTextField" destination="j8d-xV-d0U" id="rFt-cg-04D"/>
                     </connections>

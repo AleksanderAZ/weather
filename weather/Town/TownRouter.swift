@@ -11,7 +11,6 @@
 import UIKit
 
 class TownRouter: TownWireframeProtocol {
-    
     weak var viewController: TownViewController? // UIViewController?
     
     static func createModule(view: TownViewController) {

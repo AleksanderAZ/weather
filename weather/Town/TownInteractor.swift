@@ -11,13 +11,10 @@
 import UIKit
 
 class TownInteractor: TownInteractorProtocol {
-
     weak var presenter: TownPresenterProtocol?
-    
     let townDataBase: TownDataBaseProtocol = TownDataBase()
     private var nameTowns = [String]()
     private var townModel: [TownModel]?
-    
     
     func appendLoadTown(index: Int, count: Int) {
          let item = self.nameTowns[index]
@@ -48,7 +45,6 @@ class TownInteractor: TownInteractorProtocol {
     }
     
     func getTown(completion: @escaping ([TownModel]?)->()) {
-        
         if let townModel = self.townModel {
             completion(townModel)
         }
@@ -74,20 +70,23 @@ class TownInteractor: TownInteractorProtocol {
                 }
             }
         }
+        else {
+            self.error(text: "This city already exists.")
+        }
     }
     
     func loadTownInfo(nameTown: String, completion: @escaping (String?, String?, String?)->()) {
-        
         NetworkServiceAPI.shared.loadAPIRequestTown(nameTown: nameTown) { [weak self] (result: TownAPIModel?) in
-            
-            guard let result = result else { return }
-            
+            guard let result = result else {
+                self?.error(text: "Server access error or no data available")
+                return
+            }
             let name: String = result.name ?? ""
             var tempr: String = ""
             var lon: String = ""
             var lat: String = ""
             var date: String = ""
-            
+
             if let temp = result.main?.temp {
               tempr = String(temp)
             }
@@ -104,8 +103,11 @@ class TownInteractor: TownInteractorProtocol {
                 date = dateFormatter.string(from: dateUTS)
             }
             let info = "coord: " + " lon=" + lon + " lat=" + lat + "\ndata - " + date + " (UTC)"
-            
             completion(name, tempr, info)
         }
+    }
+    
+    func error(text: String) {
+        self.presenter?.error(text: text)
     }
 }

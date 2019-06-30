@@ -11,7 +11,6 @@
 import UIKit
 
 class WeatherRouter: WeatherWireframeProtocol {
-    
     weak var viewController: UIViewController?
     
     static func createModule(nameTown: String) -> UIViewController {
@@ -26,7 +25,6 @@ class WeatherRouter: WeatherWireframeProtocol {
         view.presenter = presenter
         interactor.presenter = presenter
         router.viewController = view
-        
         return view
     }
 }

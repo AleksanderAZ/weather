@@ -11,11 +11,9 @@
 import UIKit
 
 class WeatherViewController: UIViewController, WeatherViewProtocol {
-
 	var presenter: WeatherPresenterProtocol?
     
     @IBOutlet weak var weatherTableView: UITableView!
-    
     @IBOutlet weak var tatleLabel: UILabel!
     
 	override func viewDidLoad() {
@@ -43,22 +41,17 @@ extension WeatherViewController:  UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier:"WeatherTableViewCell", for: indexPath)
-        
+
         if let cell = cell as? WeatherTableViewCellProtocol {
-            
             let text = presenter?.getTextWeatherInfo(index: indexPath.row) ?? ""
-            
             cell.configCell(text: text)
         }
-        
         return cell
     }
 }
 
 extension WeatherViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    
     }
 }

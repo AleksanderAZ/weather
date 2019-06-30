@@ -10,6 +10,5 @@ import Foundation
 
 
 class TownTableCellInteractor: TownTableCellInteractorProtocol {
-    
     weak var presenter: TownTablePresenterCellProtocol?
 }
