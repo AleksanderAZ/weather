@@ -22,7 +22,6 @@ class TownCellRouter: TownCellWireframeProtocol {
         let router = TownCellRouter()
         let interactor = TownTableCellInteractor()
         
-        
         let presenter = TownTablePresenterCell(interface: (cell as TownTableViewCellProtocol), interactor: interactor, router: router)
         
         cell.presenter = presenter

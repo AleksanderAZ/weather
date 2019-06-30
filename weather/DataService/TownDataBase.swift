@@ -13,17 +13,23 @@ import RealmSwift
 class TownDataBase: TownDataBaseProtocol {
     
     let uiRealm = try! Realm()
+    var townsBD: [TownItemDB]?
+    var token: NotificationToken?
     
     init() {
        deleteDB()
         
-        if uiRealm.objects(TownItemDB.self).filter("nameTown = 'Vinnitsa'").first == nil {
-            addItem(item: "Vinnitsa")
+        if uiRealm.objects(TownItemDB.self).filter("nameTown = 'Vinnytsia'").first == nil {
+            addItem(item: "Vinnytsia")
         }
 
         if uiRealm.objects(TownItemDB.self).filter("nameTown = 'Kiev'").first == nil {
             addItem(item: "Kiev")
         }
+        
+        townsBD = self.uiRealm.objects(TownItemDB.self).sorted(by: { (lhsData, rhsData) -> Bool in
+            return lhsData.nameTown > rhsData.nameTown
+        })
     }
     
     private func deleteDB() {
@@ -40,16 +46,21 @@ class TownDataBase: TownDataBaseProtocol {
         try! uiRealm.write() {
             uiRealm.add(townItemDB)
         }
+        townsBD = self.uiRealm.objects(TownItemDB.self).sorted(by: { (lhsData, rhsData) -> Bool in
+            return lhsData.nameTown > rhsData.nameTown
+        })
     }
     
     func count()->Int {
-        let townsBD = uiRealm.objects(TownItemDB.self)
-        return townsBD.count
+        return self.townsBD?.count ?? 0
     }
     
     func getItem(index: Int)->String {
-        let townsBD = uiRealm.objects(TownItemDB.self)
-        let item = townsBD[index].nameTown
-        return item
+        let towns = self.townsBD
+        let item = self.townsBD?[index].nameTown
+        return item ?? ""
+    }
+
+    deinit {
     }
 }

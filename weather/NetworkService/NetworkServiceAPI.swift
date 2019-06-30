@@ -4,7 +4,16 @@
 //
 //  Created by Z on 6/15/19.
 //  Copyright © 2019 Zyma. All rights reserved.
+//  597cc5df41a36ea7a1e477cbbdec8485
+//  https://samples.openweathermap.org/data/2.5/weather?q=Kiev&appid=597cc5df41a36ea7a1e477cbbdec8485
+//  https://samples.openweathermap.org/data/2.5/weather?appid=597cc5df41a36ea7a1e477cbbdec8485&q=Vinnytsia
+// {"coord":{"lon":-0.13,"lat":51.51},"weather":[{"id":300,"main":"Drizzle","description":"light intensity drizzle","icon":"09d"}],"base":"stations","main":{"temp":280.32,"pressure":1012,"humidity":81,"temp_min":279.15,"temp_max":281.15},"visibility":10000,"wind":{"speed":4.1,"deg":80},"clouds":{"all":90},"dt":1485789600,"sys":{"type":1,"id":5091,"message":0.0103,"country":"GB","sunrise":1485762037,"sunset":1485794875},"id":2643743,"name":"London","cod":200}
 //
+//  https://samples.openweathermap.org/data/2.5/forecast?q=Kiev&appid=597cc5df41a36ea7a1e477cbbdec8485
+//
+//
+//
+
 
 import Foundation
 
@@ -66,6 +75,7 @@ class NetworkServiceAPI: NSObject {
         print("=========Request================")
         print (request)
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            
             guard let data = data, let response = response as? HTTPURLResponse, (200 ..< 300) ~= response.statusCode, error == nil else {
                 completion(nil, error)
                 return
@@ -85,30 +95,30 @@ class NetworkServiceAPI: NSObject {
         sessionDataTask?.cancel()
     }
     
-    func weatherAPIRequest(nameTown: String, completion: @escaping (WeatherAPIModel?)->()) {
-        let url: String = "https://"
-        let parameters: [String: String] = ["name": nameTown]
-        NetworkServiceAPI.shared.request(HTTPMethod.get.string, url, parameters) { [weak self] (result: WeatherAPIModel?, error) in
+    func loadAPIRequestTown(nameTown: String, completion: @escaping (TownAPIModel?)->()) {
+        let url: String = "https://api.openweathermap.org/data/2.5/weather"
+        let parameters: [String: String] = ["appid": "597cc5df41a36ea7a1e477cbbdec8485", "q": nameTown, "units": "metric"]
+        NetworkServiceAPI.shared.request(HTTPMethod.get.string, url, parameters) { [weak self] (result: TownAPIModel?, error) in
             
             if let err = error as? CustomError {
-                
-                let test = WeatherAPIModel(name: "test", items: nil)
-                completion(test)
-                
+                completion(nil)
                 print(err.localizedDescription)
                 return
             }
             guard let result = result else {
-                
-                let test = WeatherAPIModel(name: "test", items: nil)
-                completion(test)
+                completion(nil)
                 return
-                
             }
-    
-            completion(result)
+            if result.cod == 200 {
+                completion(result)
+            }
+            else {
+                print("ERROR request")
+                completion(nil)
+            }
         }
     }
+    
 }
 
 extension URLComponents {

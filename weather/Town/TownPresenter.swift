@@ -11,12 +11,14 @@
 import UIKit
 
 class TownPresenter: TownPresenterProtocol {
+
     
     var townModel: [TownModel]?
     
     weak private var view: TownViewProtocol?
     var interactor: TownInteractorProtocol?
     private let router: TownWireframeProtocol
+    private var filtr: String?
     
     
     init(interface: TownViewProtocol, interactor: TownInteractorProtocol?, router: TownWireframeProtocol) {
@@ -32,18 +34,23 @@ class TownPresenter: TownPresenterProtocol {
         self.loadData(filtr: nil)
     }
 
-    func loadData(filtr: String?) {
-         
-       interactor?.getTown() { [weak self] (towns: [TownModel]?) in
-            self?.townModel = towns
-            if filtr != nil && filtr != "" {
-                self?.townModel = self?.townModel?.filter { (item) in
-                    guard let name = item.name else { return false }
-                    guard let filtr = filtr else { return false }
-                    return name.contains(filtr)
-                }
+    func updata(towns: [TownModel]?) {
+        self.townModel = towns
+        if filtr != nil && filtr != "" {
+            self.townModel = self.townModel?.filter { (item) in
+                guard let name = item.name else { return false }
+                guard let filtr = filtr else { return false }
+                return name.contains(filtr)
             }
-            self?.view?.update()
+        }
+        self.view?.update()
+    }
+    
+    
+    func loadData(filtr: String?) {
+       self.filtr = filtr
+       interactor?.getTown() { [weak self] (towns: [TownModel]?) in
+            self?.updata(towns: towns)
        }
     }
     
@@ -78,7 +85,7 @@ class TownPresenter: TownPresenterProtocol {
         } else {
            townModel?[index].typeInfo = true
         }
-        view?.update()
+        self.view?.update()
     }
     
     func showWeatherView(indexCell: Int) {
@@ -93,9 +100,7 @@ class TownPresenter: TownPresenterProtocol {
     func addTown(townName: String?) {
         guard let name = townName else { return }
         if name != "" {
-            interactor?.addTown(name: name) { [weak self] (towns: [TownModel]?) in
-                self?.loadData(filtr: name)
-            }
+            interactor?.addTown(name: name)
         }
     }
     

@@ -15,29 +15,39 @@ class TownInteractor: TownInteractorProtocol {
     weak var presenter: TownPresenterProtocol?
     
     let townDataBase: TownDataBaseProtocol = TownDataBase()
-    
+    private var nameTowns = [String]()
     private var townModel: [TownModel]?
     
-    func loadTown(completion: @escaping ([TownModel]?)->()) {
+    
+    func appendLoadTown(index: Int, count: Int) {
+      print(index,"----")
         
-        var countResult = 0
-        let count = townDataBase.count()
-        townModel?.removeAll()
-        for index in 0..<count {
-            let item = townDataBase.getItem(index: index)
-            
-            loadTownInfo(nameTown: item) { [weak self] (name: String?, tempr: String?, info: String?) in
-                print("-----",item,"--",name," ",tempr)
-                self?.townModel?.append(TownModel(name: item, temperature: tempr, townFullInfo: info, typeInfo: false))
-                countResult = countResult + 1
-                print(countResult, count)
-                if countResult >= count {
-                    print(self?.townModel)
-                    completion(self?.townModel)
-                }
+         let item = self.nameTowns[index]
+         loadTownInfo(nameTown: item) { [weak self] (name: String?, tempr: String?, info: String?) in
+            self?.townModel?.append(TownModel(name: item, temperature: tempr, townFullInfo: info, typeInfo: false))
+            let i = index + 1
+            if i >= count {
+                self?.presenter?.updata(towns: self?.townModel)
             }
+            else {
+                print("-------",i,"--------")
+                self?.appendLoadTown(index: i, count: count)
+            }
+         }
+    }
+    
+    func loadTown() {
+        let index: Int = 0
+        let count = townDataBase.count()
+        if count > 0 {
+            townModel?.removeAll()
+            nameTowns.removeAll()
+            for i in 0..<count {
+                let item = townDataBase.getItem(index: i)
+                self.nameTowns.append(item)
+            }
+            self.appendLoadTown(index: index, count: count)
         }
-        
     }
     
     func getTown(completion: @escaping ([TownModel]?)->()) {
@@ -47,14 +57,11 @@ class TownInteractor: TownInteractorProtocol {
         }
         else {
             self.townModel = [TownModel]()
-            self.loadTown() { [weak self] (towns: [TownModel]?) in
-                self?.townModel = towns
-                completion(towns)
-            }
+            self.loadTown()
         }
     }
     
-    func addTown(name: String, completion: @escaping ([TownModel]?)->()) {
+    func addTown(name: String) {
         
         let itemsTowns = self.townModel?.filter { (item) in
             guard let itemName = item.name else { return false }
@@ -64,23 +71,45 @@ class TownInteractor: TownInteractorProtocol {
         let isTowns = itemsTowns?.count ?? 0
         print(isTowns)
         if  isTowns == 0 {
-            townDataBase.addItem(item: name)
-            self.loadTown() { [weak self] (towns: [TownModel]?) in
-                self?.townModel = towns
-                completion(nil)
+            self.loadTownInfo(nameTown: name) { [weak self] (name: String?, tempr: String?, info: String?) in
+                DispatchQueue.main.async {
+                    if let name = name {
+                        self?.townDataBase.addItem(item: name)
+                        self?.loadTown()
+                    }
+                }
             }
         }
     }
     
     func loadTownInfo(nameTown: String, completion: @escaping (String?, String?, String?)->()) {
         
-        NetworkServiceAPI.shared.weatherAPIRequest(nameTown: nameTown) { [weak self] (result: WeatherAPIModel?) in
+        NetworkServiceAPI.shared.loadAPIRequestTown(nameTown: nameTown) { [weak self] (result: TownAPIModel?) in
             
             guard let result = result else { return }
             
-            let name = result.name! + " name"
-            let tempr = result.name! + " tempr"
-            let info = result.name! + " info"
+            let name: String = result.name ?? ""
+            var tempr: String = ""
+            var lon: String = ""
+            var lat: String = ""
+            var date: String = ""
+            
+            if let temp = result.main?.temp {
+              tempr = String(temp)
+            }
+            if let l = result.coord?.lon {
+                lon = String(l)
+            }
+            if let l = result.coord?.lat {
+                lat = String(l)
+            }
+            if let d = result.dt {
+                let dateUTS = Date(timeIntervalSince1970: d)
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"                 // Note: S is fractional second
+                date = dateFormatter.string(from: dateUTS)
+            }
+            let info = "coord: " + " lon=" + lon + " lat=" + lat + "\ndata - " + date + " (UTC)"
             
             completion(name, tempr, info)
         }

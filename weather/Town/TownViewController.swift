@@ -39,7 +39,8 @@ class TownViewController: UIViewController, TownViewProtocol {
     func update() {
         DispatchQueue.main.async {
             self.townTableView.reloadData()
-            
+            let sectionIndex = IndexSet(integer: 0)
+            self.townTableView.reloadSections(sectionIndex, with: .none)
         }
     }
 }

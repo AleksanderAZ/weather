@@ -24,6 +24,7 @@ protocol TownPresenterProtocol: class {
     func showWeatherView(indexCell: Int)
     func choiceTown(townName: String?)
     func addTown(townName: String?)
+    func updata(towns: [TownModel]?)
 }
 
 //MARK: Interactor -
@@ -32,7 +33,7 @@ protocol TownInteractorProtocol: class {
   var presenter: TownPresenterProtocol?  { get set }
     
   func getTown(completion: @escaping ([TownModel]?)->())
-    func addTown(name: String, completion: @escaping ([TownModel]?)->())
+    func addTown(name: String)
 }
 
 //MARK: View -
