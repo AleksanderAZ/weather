@@ -120,7 +120,7 @@
                                                                 <constraint firstAttribute="height" constant="30" id="J7P-q8-R5N"/>
                                                                 <constraint firstAttribute="width" constant="30" id="YD4-j7-jZd"/>
                                                             </constraints>
-                                                            <state key="normal" title="V"/>
+                                                            <state key="normal" title="  "/>
                                                             <connections>
                                                                 <action selector="openButtonAction:" destination="TS2-Cf-Qqg" eventType="touchUpInside" id="xwR-MC-VYV"/>
                                                             </connections>
@@ -207,7 +207,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="359" height="301.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tG1-Uc-Nzh">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tG1-Uc-Nzh">
                                                             <rect key="frame" x="23" y="19" width="313" height="264"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>

@@ -24,11 +24,22 @@ class WeatherPresenter: WeatherPresenterProtocol {
         self.interactor = interactor
         self.router = router
 
-        weatherModel = [WeatherModel]()
-        
-        weatherModel?.append(WeatherModel(weatherForecast: "rain"))
-        weatherModel?.append(WeatherModel(weatherForecast: "sun"))
     }
+    
+    func updata(weather: [WeatherModel]?) {
+        self.weatherModel = weather
+        print(weather)
+        self.view?.update()
+    }
+    
+    
+    func loadData() {
+        guard let name = self.nameTown else { return }
+        interactor?.loadInfo(nameTown: name) { [weak self] (result: [WeatherModel]?) in
+             self?.updata(weather: result)
+        }
+    }
+    
     
     func count()->Int? {
         return weatherModel?.count
@@ -42,12 +53,11 @@ class WeatherPresenter: WeatherPresenterProtocol {
     
     func getTextWeatherInfo(index: Int)->String {
         
-        let weatherForecast = (weatherModel?[index].weatherForecast ?? "") + (nameTown ?? "")
+        let weatherForecast = (weatherModel?[index].weatherForecast ?? "")
         return weatherForecast
     }
     
     deinit {
         weatherModel?.removeAll()
-        print("exit")
     }
 }

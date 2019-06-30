@@ -57,11 +57,9 @@ class TownTableViewCell: UITableViewCell, TownTableViewCellProtocol {
         tawnLabel.attributedText = text
         
         if type {
-            openButton.titleLabel?.text = "V"
             openButton.backgroundColor = .red
         }
         else {
-            openButton.titleLabel?.text = "^"
             openButton.backgroundColor = .green
         }
     }

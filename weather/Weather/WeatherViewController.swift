@@ -21,9 +21,16 @@ class WeatherViewController: UIViewController, WeatherViewProtocol {
 	override func viewDidLoad() {
         super.viewDidLoad()
         tatleLabel.text = presenter?.getTitle()
-        
+        presenter?.loadData()
     }
 
+    func update() {
+        DispatchQueue.main.async {
+            self.weatherTableView.reloadData()
+            let sectionIndex = IndexSet(integer: 0)
+            self.weatherTableView.reloadSections(sectionIndex, with: .none)
+        }
+    }
 }
 
 extension WeatherViewController:  UITableViewDataSource {

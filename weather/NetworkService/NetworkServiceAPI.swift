@@ -72,8 +72,10 @@ class NetworkServiceAPI: NSObject {
         
         var request = URLRequest(url: componentsUrl)
         request.httpMethod = method
-        print("=========Request================")
+        
+        print("Request================")
         print (request)
+        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             
             guard let data = data, let response = response as? HTTPURLResponse, (200 ..< 300) ~= response.statusCode, error == nil else {
@@ -95,30 +97,42 @@ class NetworkServiceAPI: NSObject {
         sessionDataTask?.cancel()
     }
     
-    func loadAPIRequestTown(nameTown: String, completion: @escaping (TownAPIModel?)->()) {
-        let url: String = "https://api.openweathermap.org/data/2.5/weather"
+    func loadAPIRequest<T: Codable>(url: String, nameTown: String, completion: @escaping (T?)->()) {
         let parameters: [String: String] = ["appid": "597cc5df41a36ea7a1e477cbbdec8485", "q": nameTown, "units": "metric"]
-        NetworkServiceAPI.shared.request(HTTPMethod.get.string, url, parameters) { [weak self] (result: TownAPIModel?, error) in
+        self.request(HTTPMethod.get.string, url, parameters) { [weak self] (result: T?, error) in
             
             if let err = error as? CustomError {
                 completion(nil)
-                print(err.localizedDescription)
                 return
             }
             guard let result = result else {
                 completion(nil)
                 return
             }
-            if result.cod == 200 {
+            
+            completion(result)
+        }
+    
+    }
+    
+    func loadAPIRequestTown(nameTown: String, completion: @escaping (TownAPIModel?)->()) {
+        let url: String = "https://api.openweathermap.org/data/2.5/weather"
+        self.loadAPIRequest(url: url, nameTown: nameTown) { [weak self] (result: TownAPIModel?) in
+            if result?.cod == 200 {
                 completion(result)
-            }
-            else {
-                print("ERROR request")
-                completion(nil)
             }
         }
     }
-    
+
+
+    func loadAPIRequestWeather(nameTown: String, completion: @escaping (WeatherAPIModel?)->()) {
+        let url: String = "https://api.openweathermap.org/data/2.5/forecast"
+        self.loadAPIRequest(url: url, nameTown: nameTown) { [weak self] (result: WeatherAPIModel?) in
+            if result?.cod == "200" {
+                completion(result)
+            }
+        }
+    }
 }
 
 extension URLComponents {

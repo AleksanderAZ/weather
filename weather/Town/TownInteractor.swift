@@ -20,8 +20,6 @@ class TownInteractor: TownInteractorProtocol {
     
     
     func appendLoadTown(index: Int, count: Int) {
-      print(index,"----")
-        
          let item = self.nameTowns[index]
          loadTownInfo(nameTown: item) { [weak self] (name: String?, tempr: String?, info: String?) in
             self?.townModel?.append(TownModel(name: item, temperature: tempr, townFullInfo: info, typeInfo: false))
@@ -30,7 +28,6 @@ class TownInteractor: TownInteractorProtocol {
                 self?.presenter?.updata(towns: self?.townModel)
             }
             else {
-                print("-------",i,"--------")
                 self?.appendLoadTown(index: i, count: count)
             }
          }
@@ -62,14 +59,11 @@ class TownInteractor: TownInteractorProtocol {
     }
     
     func addTown(name: String) {
-        
         let itemsTowns = self.townModel?.filter { (item) in
             guard let itemName = item.name else { return false }
             return (name == itemName)
         }
-        
         let isTowns = itemsTowns?.count ?? 0
-        print(isTowns)
         if  isTowns == 0 {
             self.loadTownInfo(nameTown: name) { [weak self] (name: String?, tempr: String?, info: String?) in
                 DispatchQueue.main.async {

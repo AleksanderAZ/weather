@@ -270,8 +270,8 @@
 				A4EAF96D22B01755009A1C4C /* WeatherProtocols.swift */,
 				A4EAF96E22B01755009A1C4C /* WeatherRouter.swift */,
 				A4EAF96F22B01755009A1C4C /* WeatherViewController.swift */,
-				A4EAF97022B01755009A1C4C /* WeatherViewController.xib */,
 				A460747322B3975200FDCAE1 /* WeatherTableViewCell.swift */,
+				A4EAF97022B01755009A1C4C /* WeatherViewController.xib */,
 			);
 			path = Weather;
 			sourceTree = "<group>";

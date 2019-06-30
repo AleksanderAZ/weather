@@ -17,7 +17,7 @@ class TownDataBase: TownDataBaseProtocol {
     var token: NotificationToken?
     
     init() {
-       deleteDB()
+       //deleteDB()
         
         if uiRealm.objects(TownItemDB.self).filter("nameTown = 'Vinnytsia'").first == nil {
             addItem(item: "Vinnytsia")

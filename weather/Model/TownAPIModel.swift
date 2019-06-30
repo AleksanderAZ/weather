@@ -121,3 +121,4 @@ struct Wind: Codable {
         case deg = "deg"
     }
 }
+

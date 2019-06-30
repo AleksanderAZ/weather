@@ -106,6 +106,5 @@ class TownPresenter: TownPresenterProtocol {
     
     deinit {
         townModel?.removeAll()
-        print("exit")
     }
 }
