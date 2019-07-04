@@ -19,18 +19,21 @@ protocol WeatherPresenterProtocol: class {
     func getTextWeatherInfo(index: Int)->String
     func getTitle()->String
     func loadData()
+    func error(text: String)
 }
 
 //MARK: Interactor -
 protocol WeatherInteractorProtocol: class {
     var presenter: WeatherPresenterProtocol?  { get set }
-    func loadInfo(nameTown: String, completion: @escaping ([WeatherModel]?)->())
+    func loadAPIRequestWeather(nameTown: String, completion: @escaping (WeatherAPIModel?)->())
+    func error(text: String)
 }
 
 //MARK: View -
 protocol WeatherViewProtocol: class {
     var presenter: WeatherPresenterProtocol?  { get set }
     func update()
+    func showError(text: String)
 }
 
 protocol WeatherTableViewCellProtocol: class {

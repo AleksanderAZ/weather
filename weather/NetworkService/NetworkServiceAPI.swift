@@ -7,6 +7,13 @@
 
 import Foundation
 
+struct RequestsDataAPI {
+    static let baseURL = "https://api.openweathermap.org/data/2.5/"
+    static let townPath = "weather"
+    static let weatherPath = "forecast"
+    static let parameters: [String: String] = ["appid": "597cc5df41a36ea7a1e477cbbdec8485", "units": "metric"]
+}
+
 enum HTTPMethod {
     case get
     case put
@@ -29,7 +36,6 @@ protocol CustomErrorProtocol: Error {
 }
 
 struct CustomError: CustomErrorProtocol {
-    
     var localizedDescription: String
     var code: Int
     
@@ -40,10 +46,8 @@ struct CustomError: CustomErrorProtocol {
 }
 
 class NetworkServiceAPI: NSObject {
-    
     static let shared = NetworkServiceAPI()
     private var sessionDataTask: URLSessionDataTask?
-    
     let dataIsNil = CustomError.init(localizedDescription: "Data is lost, please try again", code: 0)
     let urlIsNil = CustomError.init(localizedDescription: "Wrong URL", code: 0)
     let componentsUrlIsNil = CustomError.init(localizedDescription: "Wrong ComponentsUrl", code: 0)
@@ -53,7 +57,6 @@ class NetworkServiceAPI: NSObject {
     }
     
     func request<T: Codable>(_ method: String,_ url: String,_ parameters: [String: String], completion: @escaping (T?, _ error: Error?)->()) {
-        
         guard var components = URLComponents(string: url) else { return completion(nil, self.urlIsNil) }
         components.addQueryItems(parameters)
         guard let componentsUrl = components.url else { return completion(nil, self.componentsUrlIsNil) }
@@ -78,39 +81,18 @@ class NetworkServiceAPI: NSObject {
         sessionDataTask?.cancel()
     }
     
-    func loadAPIRequest<T: Codable>(url: String, nameTown: String, completion: @escaping (T?)->()) {
-        let parameters: [String: String] = ["appid": "597cc5df41a36ea7a1e477cbbdec8485", "q": nameTown, "units": "metric"]
+    func loadAPIRequest<T: Codable>(url: String, nameTown: String, completion: @escaping (T?, String?)->()) {
+        let parameters: [String: String] = RequestsDataAPI.parameters.merging(["q": nameTown], uniquingKeysWith: { (_, new) in new })
         self.request(HTTPMethod.get.string, url, parameters) { [weak self] (result: T?, error) in
             if let err = error as? CustomError {
-                completion(nil)
+                completion(nil, err.localizedDescription)
                 return
             }
             guard let result = result else {
-                completion(nil)
+                completion(nil, self?.dataIsNil.localizedDescription)
                 return
             }
-            completion(result)
-        }
-    }
-    
-    func loadAPIRequestTown(nameTown: String, completion: @escaping (TownAPIModel?)->()) {
-        let url: String = "https://api.openweathermap.org/data/2.5/weather"
-        self.loadAPIRequest(url: url, nameTown: nameTown) { [weak self] (result: TownAPIModel?) in
-            if result?.cod == 200 {
-                completion(result)
-            }
-            else {
-                completion(nil)
-            }
-        }
-    }
-
-    func loadAPIRequestWeather(nameTown: String, completion: @escaping (WeatherAPIModel?)->()) {
-        let url: String = "https://api.openweathermap.org/data/2.5/forecast"
-        self.loadAPIRequest(url: url, nameTown: nameTown) { [weak self] (result: WeatherAPIModel?) in
-            if result?.cod == "200" {
-                completion(result)
-            }
+            completion(result, nil)
         }
     }
 }

@@ -16,9 +16,9 @@ protocol TownWireframeProtocol: class {
 }
 //MARK: Presenter -
 protocol TownPresenterProtocol: class {
-    func count()->Int?
+    func count()->Int
     func actionCellButton(index: Int?)
-    func getTextTownInfo(index: Int)->(String, String)
+    func getTextTownInfo(index: Int)->(String, String, String)
     func getTypeTownInfo(index: Int)->Bool
     func showWeatherView(indexCell: Int)
     func choiceTown(townName: String?)
@@ -28,13 +28,7 @@ protocol TownPresenterProtocol: class {
 }
 
 //MARK: Interactor -
-protocol TownInteractorProtocol: class {
-    var presenter: TownPresenterProtocol?  { get set }
-    
-    func getTown(completion: @escaping ([TownModel]?)->())
-    func addTown(name: String)
-    func error(text: String)
-}
+
 
 //MARK: View -
 protocol TownViewProtocol: class {
@@ -42,4 +36,19 @@ protocol TownViewProtocol: class {
     func update()
     func showError(text: String)
 }
+
+protocol TownInteractorDBProtocol: class {
+    var presenter: TownPresenterProtocol?  { get set }
+    
+    func addItem(item: TownItemDB, completion: @escaping (String?)->())
+    func getItems(completion: @escaping ([TownItemDB]?)->())
+    func error(text: String)
+}
+protocol TownInteractorAPIProtocol: class {
+    var presenter: TownPresenterProtocol?  { get set }
+    
+    func loadAPIRequestTown(nameTown: String, completion: @escaping (TownAPIModel?)->())
+    func error(text: String)
+}
+
 

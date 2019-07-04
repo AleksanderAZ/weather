@@ -29,6 +29,27 @@ class WeatherViewController: UIViewController, WeatherViewProtocol {
             self.weatherTableView.reloadSections(sectionIndex, with: .none)
         }
     }
+    
+    func showMessage(title: String, text: String, action repeatHandler: @escaping ()->()) {
+        let alertAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            repeatHandler()
+        }
+        let controller = UIAlertController(title: title, message: text, preferredStyle: .alert)
+        controller.addAction(alertAction)
+        
+        DispatchQueue.main.async {
+            self.present(controller, animated: true, completion: nil)
+        }
+    }
+    
+    func showError(text: String) {
+        DispatchQueue.main.async {
+            // self.indicator.stopAnimating()
+            self.showMessage(title: "ERROR", text: text) { () in
+                
+            }
+        }
+    }
 }
 
 extension WeatherViewController:  UITableViewDataSource {

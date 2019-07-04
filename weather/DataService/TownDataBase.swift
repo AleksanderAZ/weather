@@ -7,53 +7,46 @@
 //
 
 import Foundation
-
 import RealmSwift
 
-class TownDataBase: TownDataBaseProtocol {
+class TownDataBase {
+    public static let shared = TownDataBase()
     
-    let uiRealm = try! Realm()
-    var townsBD: [TownItemDB]?
-    var token: NotificationToken?
-    
-    init() {
-        if uiRealm.objects(TownItemDB.self).filter("nameTown = 'Vinnytsia'").first == nil {
-            addItem(item: "Vinnytsia")
-        }
-        if uiRealm.objects(TownItemDB.self).filter("nameTown = 'Kiev'").first == nil {
-            addItem(item: "Kiev")
-        }
-        townsBD = self.uiRealm.objects(TownItemDB.self).sorted(by: { (lhsData, rhsData) -> Bool in
-            return lhsData.nameTown > rhsData.nameTown
-        })
-    }
-    
-    private func deleteDB() {
-        try! uiRealm.write {
-            uiRealm.deleteAll()
+    private var townRealm: Realm?
+    public var uiRealm: Realm? {
+        get {
+            if self.townRealm == nil {
+                do {
+                    self.townRealm = try Realm()
+                }
+                catch {
+                }
+            }
+            return self.townRealm
         }
     }
     
-    func addItem(item: String) {
-        let townItemDB = TownItemDB()
-        townItemDB.nameTown = item
-        try! uiRealm.write() {
-            uiRealm.add(townItemDB)
+    public func write(writeClosure: (Realm) -> ()) {
+        if let realm = self.uiRealm {
+            do {
+                try realm.write {
+                    writeClosure(realm)
+                }
+            }
+            catch {
+            }
         }
-        townsBD = self.uiRealm.objects(TownItemDB.self).sorted(by: { (lhsData, rhsData) -> Bool in
-            return lhsData.nameTown > rhsData.nameTown
-        })
     }
     
-    func count()->Int {
-        return self.townsBD?.count ?? 0
+    private init() {
+   //     guard let realm = self.uiRealm else { return  }
+   //     guard let _ = realm.objects(TownItemDB.self).first else {
+   //         addItem(item: "Vinnytsia")
+   //         addItem(item: "Kiev")
+    //        return
+    //    }
     }
     
-    func getItem(index: Int)->String {
-        let item = self.townsBD?[index].nameTown
-        return item ?? ""
-    }
-
     deinit {
     }
 }

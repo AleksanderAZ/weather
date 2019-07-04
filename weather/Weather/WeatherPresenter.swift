@@ -30,7 +30,7 @@ class WeatherPresenter: WeatherPresenterProtocol {
     
     func loadData() {
         guard let name = self.nameTown else { return }
-        interactor?.loadInfo(nameTown: name) { [weak self] (result: [WeatherModel]?) in
+        self.loadInfo(nameTown: name) { [weak self] (result: [WeatherModel]?) in
              self?.updata(weather: result)
         }
     }
@@ -47,6 +47,38 @@ class WeatherPresenter: WeatherPresenterProtocol {
     func getTextWeatherInfo(index: Int)->String {
         let weatherForecast = (weatherModel?[index].weatherForecast ?? "")
         return weatherForecast
+    }
+    
+    func error(text: String) {
+        self.view?.showError(text: text)
+    }
+    
+    func loadInfo(nameTown: String, completion: @escaping ([WeatherModel]?)->()) {
+        interactor?.loadAPIRequestWeather(nameTown: nameTown) { [weak self] (result: WeatherAPIModel?) in
+            guard let list = result?.list else { return }
+            let count = list.count
+            var weatherModel = [WeatherModel]()
+            var date: String = ""
+            var tempr: String = ""
+            var rain: String = ""
+            var main: String = ""
+            
+            for i in 0..<count {
+                date = list[i].dtTxt ?? ""
+                if let m = list[i].weather?[0].main?.description {
+                    main = m
+                }
+                if let r = list[i].rain?.the3H {
+                    rain = String(describing:  r)
+                }
+                if let t = list[i].main?.temp {
+                    tempr = String(t)
+                }
+                let text = date + ":\n" +  "tempr - " + tempr + ",\nmain - " + main + ",\nrain - " + rain
+                weatherModel.append(WeatherModel(weatherForecast: text))
+            }
+            completion(weatherModel)
+        }
     }
     
     deinit {

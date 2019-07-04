@@ -16,12 +16,14 @@ class TownRouter: TownWireframeProtocol {
     static func createModule(view: TownViewController) {
         // Change to get view from storyboard if not using progammatic UI
         let view = view
-        let interactor = TownInteractor()
+        let interactorDB = TownInteractorDB()
+        let interactorAPI = TownInteractorAPI()
         let router = TownRouter()
-        let presenter = TownPresenter(interface: view, interactor: interactor, router: router)
+        let presenter = TownPresenter(interface: view, interactorAPI: interactorAPI, interactorDB: interactorDB, router: router)
         
         view.presenter = presenter
-        interactor.presenter = presenter
+        interactorAPI.presenter = presenter
+        interactorDB.presenter = presenter
         router.viewController = view
     }
     

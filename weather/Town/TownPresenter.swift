@@ -11,63 +11,50 @@
 import UIKit
 
 class TownPresenter: TownPresenterProtocol {
-    var townModel: [TownModel]?
     weak private var view: TownViewProtocol?
-    var interactor: TownInteractorProtocol?
+    var interactorAPI: TownInteractorAPIProtocol?
+    var interactorDB: TownInteractorDBProtocol?
     private let router: TownWireframeProtocol
     private var filtr: String?
+    var townModel: [TownModel]?
+    var townModelFiltr: [TownModel]?
     
-    init(interface: TownViewProtocol, interactor: TownInteractorProtocol?, router: TownWireframeProtocol) {
+    init(interface: TownViewProtocol, interactorAPI: TownInteractorAPIProtocol?, interactorDB: TownInteractorDBProtocol?, router: TownWireframeProtocol) {
         self.view = interface
-        self.interactor = interactor
+        self.interactorAPI = interactorAPI
+        self.interactorDB = interactorDB
         self.router = router
+        
         self.loadData(filtr: nil)
     }
 
     func updata(towns: [TownModel]?) {
-        self.townModel = towns
-        if filtr != nil && filtr != "" {
-            self.townModel = self.townModel?.filter { (item) in
-                guard let name = item.name else { return false }
-                guard let filtr = filtr else { return false }
-                return name.contains(filtr)
+        if filtr == nil || filtr == "" {
+            self.townModelFiltr = towns
+        }
+        else {
+            self.townModelFiltr = towns?.filter { (item) in
+            guard let name = item.name else { return false }
+            guard let filtr = filtr else { return false }
+            return name.contains(filtr)
             }
         }
         self.view?.update()
     }
     
-    func error(text: String) {
-        self.view?.showError(text: text)
+    func count()->Int {
+        return townModelFiltr?.count ?? 0
     }
     
-    
-    func loadData(filtr: String?) {
-       self.filtr = filtr
-       interactor?.getTown() { [weak self] (towns: [TownModel]?) in
-            self?.updata(towns: towns)
-       }
-    }
-    
-    func count()->Int? {
-        return townModel?.count
-    }
-    
-    func getTextTownInfo(index: Int)->(String, String) {
-        
-        let town = townModel?[index].name ?? ""
-        let tempr = townModel?[index].temperature ?? ""
-        
-        if !(getTypeTownInfo(index: index)) {
-            return (town, " " + tempr)
-        }
-        else {
-            let info = townModel?[index].townFullInfo ?? ""
-            return (town, " " + tempr + "\n" + info)
-        }
+    func getTextTownInfo(index: Int)->(String, String, String) {
+        let town = townModelFiltr?[index].name ?? ""
+        let tempr = townModelFiltr?[index].temperature ?? ""
+        let info = townModelFiltr?[index].townFullInfo ?? ""
+        return (town, tempr, info)
     }
     
     func getTypeTownInfo(index: Int)->Bool {
-       let type = townModel?[index].typeInfo ?? false
+        let type = townModel?[index].typeInfo ?? false
         return type
     }
     
@@ -75,30 +62,150 @@ class TownPresenter: TownPresenterProtocol {
         guard let index = index else { return }
         guard let type = townModel?[index].typeInfo else { return }
         if type {
-           townModel?[index].typeInfo = false
+            townModel?[index].typeInfo = false
         } else {
-           townModel?[index].typeInfo = true
+            townModel?[index].typeInfo = true
         }
         self.view?.update()
     }
     
     func showWeatherView(indexCell: Int) {
         guard let nameTown = townModel?[indexCell].name else { return }
-        router.showWeatherView(nameTown: nameTown)
+        self.router.showWeatherView(nameTown: nameTown)
     }
-
+    
     func choiceTown(townName: String?) {
-        loadData(filtr: townName)
+        self.filtr = townName
+        self.updata(towns: self.townModel)
     }
-
-    func addTown(townName: String?) {
-        guard let name = townName else { return }
-        if name != "" {
-            interactor?.addTown(name: name)
+    
+    func loadTownInfo(nameTown: String, completion: @escaping (String?, String?, String?)->()) {
+        interactorAPI?.loadAPIRequestTown(nameTown: nameTown) { [weak self] (result: TownAPIModel?) in
+            guard let result = result else {
+                self?.error(text: "Server access error or no data available")
+                return
+            }
+            let name: String? = result.name
+            var tempr: String?
+            var lon: String?
+            var lat: String?
+            var date: String?
+            
+            if let temp = result.main?.temp {
+                tempr = String(temp)
+            }
+            if let l = result.coord?.lon {
+                lon = String(l)
+            }
+            if let l = result.coord?.lat {
+                lat = String(l)
+            }
+            if let d = result.dt {
+                let dateUTS = Date(timeIntervalSince1970: d)
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                date = dateFormatter.string(from: dateUTS)
+            }
+            
+            
+            let lonInfo = lon ?? ""
+            let latInfo = lat ?? ""
+            let dateInfo = date ?? ""
+            
+            let info = "coord: " + " lon=" + lonInfo + " lat=" + latInfo + "\ndata - " + dateInfo + " (UTC)"
+            completion(name, tempr, info)
         }
     }
     
+    func addTown(townName: String?) {
+        guard let name = townName else {
+            self.error(text: "Not city.")
+            return
+        }
+        if name == "" {
+            self.error(text: "Not city.")
+            return
+        }
+        else {
+            if let townModel = self.townModel {
+                for item in townModel {
+                    guard let itemName = item.name else { continue }
+                    if itemName == name {
+                        self.error(text: "This city already exists.")
+                        return
+                    }
+                }
+            }
+            self.loadTownInfo(nameTown: name) { [weak self] (name: String?, tempr: String?, info: String?) in
+                guard let name = name else {
+                    self?.error(text: "No information about this city")
+                    return
+                }
+                let item = TownItemDB()
+                item.nameTown = name
+                self?.interactorDB?.addItem(item: item) { [weak self] (name: String?) in
+                    guard let name = name else {
+                        self?.error(text: "Error data base write")
+                        return
+                    }
+                    if let _ = self?.townModel {
+                        self?.townModel = [TownModel]()
+                    }
+                    self?.townModel?.append(TownModel(name: name, temperature: tempr, townFullInfo: info, typeInfo: false))
+                    self?.updata(towns: self?.townModel)
+                }
+            }
+        }
+    }
+    
+    func loadData(filtr: String?) {
+        self.getTown() { [weak self] (towns: [TownModel]?) in
+            self?.updata(towns: towns)
+        }
+    }
+  
+    func getTown(completion: @escaping ([TownModel]?)->()) {
+        if let townModel = self.townModel {
+            completion(townModel)
+        }
+        else {
+            self.townModel = [TownModel]()
+            self.loadTowns()
+        }
+    }
+
+    func appendLoadTown(index: Int, count: Int, townItems: [TownItemDB]?) {
+        guard let item = townItems?[index].nameTown else { return }
+        self.loadTownInfo(nameTown: item) { [weak self] (name: String?, tempr: String?, info: String?) in
+            self?.townModel?.append(TownModel(name: item, temperature: tempr, townFullInfo: info, typeInfo: false))
+            let i = index + 1
+            if i >= count {
+                self?.updata(towns: self?.townModel)
+            }
+            else {
+                DispatchQueue.main.async {
+                    self?.appendLoadTown(index: i, count: count, townItems: townItems)
+                }
+            }
+        }
+    }
+    
+    func loadTowns() {
+        interactorDB?.getItems() { [weak self] (result: [TownItemDB]?) in
+            let count = result?.count ?? 0
+            let index: Int = 0
+            if count > 0 {
+                self?.townModel?.removeAll()
+                self?.appendLoadTown(index: index, count: count, townItems: result)
+            }
+        }
+    }
+    
+    func error(text: String) {
+        self.view?.showError(text: text)
+    }
+    
     deinit {
-        townModel?.removeAll()
+        print("presenter deinit")
     }
 }

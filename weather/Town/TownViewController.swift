@@ -59,7 +59,6 @@ class TownViewController: UIViewController, TownViewProtocol {
         DispatchQueue.main.async {
             self.indicator.stopAnimating()
             self.showMessage(title: "ERROR", text: text) { () in
-                
             }
         }
     }
@@ -76,15 +75,22 @@ extension TownViewController:  UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let (town, info) = presenter?.getTextTownInfo(index: indexPath.row) ?? ("", "")
+        let (town, info, infoFull) = presenter?.getTextTownInfo(index: indexPath.row) ?? ("", "", "")
         let type = presenter?.getTypeTownInfo(index: indexPath.row) ?? false
         let index = indexPath.row
-        let cell = TownCellRouter.createModule(tableView, indexPath: indexPath)
-        
-        cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        if let cell = cell as? TownTableViewCellProtocol {
-            cell.configCell(town: town, info: info, type: type, index: index, delegate: self)
+        let cell = self.createCell(tableView, indexPath: indexPath)
+    
+        if let cell = cell as? TownTableViewCell {
+            cell.configCell(town: town, tempr: info, infoFull: infoFull, type: type, index: index, delegate: self)
         }
+        return cell
+    }
+    
+    func createCell(_ tableView: UITableView, indexPath: IndexPath)->UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier:"TownTableViewCell", for: indexPath) as! TownTableViewCell
+        let presenter = TownTablePresenterCell()
+        cell.presenter = presenter
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         return cell
     }
 }

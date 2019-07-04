@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TownTablePresenterCell: TownTablePresenterCellProtocol {
+class TownTablePresenterCell {
     
     private var index: Int?
 
@@ -20,16 +20,4 @@ class TownTablePresenterCell: TownTablePresenterCellProtocol {
             index = newValue
         }
     }
-    
-    weak private var cell: TownTableViewCellProtocol?
-    var interactor: TownTableCellInteractorProtocol?
-    private let router: TownCellWireframeProtocol
-    
-    init(interface: TownTableViewCellProtocol, interactor: TownTableCellInteractorProtocol?, router: TownCellWireframeProtocol) {
-        self.cell = interface
-        self.interactor = interactor
-        self.router = router
-    }
-    
-    
 }
