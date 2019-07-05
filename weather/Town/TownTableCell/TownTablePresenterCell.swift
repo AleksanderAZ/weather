@@ -9,9 +9,7 @@
 import Foundation
 
 class TownTablePresenterCell {
-    
     private var index: Int?
-
     var indexCell: Int? {
         get {
             return index
