@@ -24,7 +24,6 @@ class TownPresenter: TownPresenterProtocol {
         self.interactorAPI = interactorAPI
         self.interactorDB = interactorDB
         self.router = router
-        
         self.loadData(filtr: nil)
     }
 
@@ -58,7 +57,7 @@ class TownPresenter: TownPresenterProtocol {
         return type
     }
     
-    func actionCellButton(index: Int?) {
+    func actionChangeCell(index: Int?) {
         guard let index = index else { return }
         guard let type = townModel?[index].typeInfo else { return }
         if type {
@@ -82,7 +81,7 @@ class TownPresenter: TownPresenterProtocol {
     func loadTownInfo(nameTown: String, completion: @escaping (String?, String?, String?)->()) {
         interactorAPI?.loadAPIRequestTown(nameTown: nameTown) { [weak self] (result: TownAPIModel?) in
             guard let result = result else {
-                self?.error(text: "Server access error or no data available")
+                self?.error(text: ErrorInfo.ErrorAPI.rawValue)
                 return
             }
             let name: String? = result.name
@@ -92,7 +91,7 @@ class TownPresenter: TownPresenterProtocol {
             var date: String?
             
             if let temp = result.main?.temp {
-                tempr = String(temp)
+                tempr = "Current t: " + String(temp) + " C"
             }
             if let l = result.coord?.lon {
                 lon = String(l)
@@ -107,54 +106,51 @@ class TownPresenter: TownPresenterProtocol {
                 date = dateFormatter.string(from: dateUTS)
             }
             
-            
             let lonInfo = lon ?? ""
             let latInfo = lat ?? ""
             let dateInfo = date ?? ""
-            
-            let info = "coord: " + " lon=" + lonInfo + " lat=" + latInfo + "\ndata - " + dateInfo + " (UTC)"
+            let info = "Coord: " + " lon=" + lonInfo + " lat=" + latInfo + "\nData: " + dateInfo + " (UTC)"
             completion(name, tempr, info)
         }
     }
     
     func addTown(townName: String?) {
         guard let name = townName else {
-            self.error(text: "Not city.")
+            self.error(text: ErrorInfo.ErrorAddCityNot.rawValue)
             return
         }
         if name == "" {
-            self.error(text: "Not city.")
+            self.error(text: ErrorInfo.ErrorAddCityNot.rawValue)
             return
         }
-        else {
-            if let townModel = self.townModel {
+
+        if let townModel = self.townModel {
                 for item in townModel {
                     guard let itemName = item.name else { continue }
                     if itemName == name {
-                        self.error(text: "This city already exists.")
+                        self.error(text: ErrorInfo.ErrorAddCityExist.rawValue)
                         return
                     }
                 }
-            }
-            self.loadTownInfo(nameTown: name) { [weak self] (name: String?, tempr: String?, info: String?) in
+        }
+        self.loadTownInfo(nameTown: name) { [weak self] (name: String?, tempr: String?, info: String?) in
                 guard let name = name else {
-                    self?.error(text: "No information about this city")
+                    self?.error(text: ErrorInfo.ErrorAddCityNoAPI.rawValue)
                     return
-                }
-                let item = TownItemDB()
-                item.nameTown = name
-                self?.interactorDB?.addItem(item: item) { [weak self] (name: String?) in
+        }
+        let item = TownItemDB()
+        item.nameTown = name
+        self?.interactorDB?.addItem(item: item) { [weak self] (name: String?) in
                     guard let name = name else {
-                        self?.error(text: "Error data base write")
+                        self?.error(text: ErrorInfo.ErrorAddCityDB.rawValue)
                         return
                     }
-                    if let _ = self?.townModel {
+                    if self?.townModel == nil {
                         self?.townModel = [TownModel]()
                     }
                     self?.townModel?.append(TownModel(name: name, temperature: tempr, townFullInfo: info, typeInfo: false))
                     self?.updata(towns: self?.townModel)
                 }
-            }
         }
     }
     
@@ -194,9 +190,12 @@ class TownPresenter: TownPresenterProtocol {
         interactorDB?.getItems() { [weak self] (result: [TownItemDB]?) in
             let count = result?.count ?? 0
             let index: Int = 0
+            self?.townModel?.removeAll()
             if count > 0 {
-                self?.townModel?.removeAll()
                 self?.appendLoadTown(index: index, count: count, townItems: result)
+            }
+            else {
+                self?.updata(towns: self?.townModel)
             }
         }
     }

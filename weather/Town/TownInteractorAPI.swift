@@ -22,7 +22,7 @@ class TownInteractorAPI: TownInteractorAPIProtocol {
                     completion(result)
                 }
                 else {
-                    self?.error(text: "Error load data for " + nameTown)
+                    self?.error(text: ErrorInfo.ErrorLoadAPI.rawValue + nameTown)
                 }
             }
         }

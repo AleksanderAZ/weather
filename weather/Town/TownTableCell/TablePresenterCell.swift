@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TownTablePresenterCell {
+class TablePresenterCell {
     private var index: Int?
     var indexCell: Int? {
         get {

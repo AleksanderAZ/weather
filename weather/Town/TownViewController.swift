@@ -29,10 +29,11 @@ class TownViewController: UIViewController, TownViewProtocol {
     
 	override func viewDidLoad() {
         super.viewDidLoad()
-        TownRouter.createModule(view: self)
+        
+        self.townTextField.layer.cornerRadius = 10
+        self.townTextField.delegate = self
         townTableView.register(UINib(nibName: townCell, bundle: nil), forCellReuseIdentifier: townCell)
-        //townTableView.estimatedRowHeight = 100
-        //townTableView.rowHeight = UITableView.automaticDimension
+        TownRouter.createModule(view: self)
     }
     
     func update() {
@@ -76,46 +77,49 @@ extension TownViewController:  UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: townCell, for: indexPath) as! TableViewCell
-        cell.nameLabel.text = "TEST TEST"
-        
-        // self.createCell(viewCell: cell, indexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: townCell, for: indexPath)
+        if let cell = cell as? TableViewCell {
+            self.createCell(cell: cell, indexPath: indexPath)
+        }
         return cell
     }
     
-    func createCell(viewCell: UITableViewCell, indexPath: IndexPath) {
-        if let cell = viewCell as? TownTableViewCell {
+    func createCell(cell: TableViewCell, indexPath: IndexPath) {
             cell.townTableViewCellDelegate = self
-            let presenter = TownTablePresenterCell()
+            let presenter = TablePresenterCell()
             cell.presenter = presenter
             cell.presenter?.indexCell = indexPath.row
             let (town, info, infoFull) = self.presenter?.getTextTownInfo(index: indexPath.row) ?? ("", "", "")
             let type = self.presenter?.getTypeTownInfo(index: indexPath.row) ?? false
+            cell.nameLabel.text = town
+            cell.temprLabel.text = info
+            cell.infoLabel.text = infoFull
             if type {
-                cell.openButton.backgroundColor = .red
-                cell.tawnLabel.text = town + " " + info + " " + infoFull
+                cell.infoLabel.text = infoFull + "\nClick for clouse info"
             }
             else {
-                cell.openButton.backgroundColor = .green
-                cell.tawnLabel.text = town + " " + info
+                cell.infoLabel.text = "Click for open info"
             }
-            let height = 8.0 + cell.tawnLabel.frame.height + 100.0
-            cell.frame = CGRect(x: 0, y: 0, width: cell.frame.size.width, height: height)
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        }
     }
 }
 
 extension TownViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter?.showWeatherView(indexCell: indexPath.row)
+        presenter?.actionChangeCell(index: indexPath.row)
     }
 }
 
 extension TownViewController: TownTableViewCellDelegate {
     func getIndex(index: Int?) {
-        presenter?.actionCellButton(index: index)
+        guard let index = index else { return }
+        presenter?.showWeatherView(indexCell: index)
+    }
+}
+
+extension TownViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
 }

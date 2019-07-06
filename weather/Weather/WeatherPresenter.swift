@@ -60,7 +60,7 @@ class WeatherPresenter: WeatherPresenterProtocol {
             var weatherModel = [WeatherModel]()
             var date: String = ""
             var tempr: String = ""
-            var rain: String = ""
+            var rain: String = "0"
             var main: String = ""
             
             for i in 0..<count {
@@ -74,7 +74,8 @@ class WeatherPresenter: WeatherPresenterProtocol {
                 if let t = list[i].main?.temp {
                     tempr = String(t)
                 }
-                let text = date + ":\n" +  "tempr - " + tempr + ",\nmain - " + main + ",\nrain - " + rain
+                
+                let text = "For time: " + date + "\n" +  "tempr - " + tempr + "C,\nmain - " + main + ",\nrain - " + rain + "%"
                 weatherModel.append(WeatherModel(weatherForecast: text))
             }
             completion(weatherModel)

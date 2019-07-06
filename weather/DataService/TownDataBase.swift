@@ -39,12 +39,20 @@ class TownDataBase {
     }
     
     private init() {
-   //     guard let realm = self.uiRealm else { return  }
-   //     guard let _ = realm.objects(TownItemDB.self).first else {
-   //         addItem(item: "Vinnytsia")
-   //         addItem(item: "Kiev")
-    //        return
-    //    }
+        guard let realm = self.uiRealm else { return  }
+        guard let _ = realm.objects(TownItemDB.self).first else {
+            self.write() { (realm) in
+                let item = TownItemDB()
+                item.nameTown = "Vinnytsia"
+                realm.add(item)
+            }
+            self.write() { (realm) in
+                let item = TownItemDB()
+                item.nameTown = "Kiev"
+                realm.add(item)
+            }
+            return
+        }
     }
     
     deinit {

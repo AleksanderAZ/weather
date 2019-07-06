@@ -9,18 +9,21 @@
 import UIKit
 
 class TableViewCell: UITableViewCell {
-
+    var presenter: TablePresenterCell?
+    weak var townTableViewCellDelegate: TownTableViewCellDelegate?
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var temprLabel: UILabel!
+    @IBOutlet weak var infoLabel: UILabel!
+    
+    @IBAction func openButtonAction(_ sender: UIButton) {
+        self.townTableViewCellDelegate?.getIndex(index: presenter?.indexCell)
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
-    
 }

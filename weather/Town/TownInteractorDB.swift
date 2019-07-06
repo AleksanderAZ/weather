@@ -26,7 +26,7 @@ class TownInteractorDB: TownInteractorDBProtocol {
     func getItems(completion: @escaping ([TownItemDB]?)->()) {
         DispatchQueue.main.async {
             guard let realm = TownDataBase.shared.uiRealm else {
-                self.error(text: "Error load towns")
+                self.error(text:  ErrorInfo.ErrorLoadDB.rawValue)
                 return
             }
             let townsDB = realm.objects(TownItemDB.self).sorted(by: { (lhsData, rhsData) -> Bool in

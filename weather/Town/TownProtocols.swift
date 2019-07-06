@@ -11,13 +11,25 @@
 import Foundation
 
 //MARK: Wireframe -
+
+enum ErrorInfo: String{
+    case ErrorAPI = "Server access error or no data available"
+    case ErrorAddCityNot = "Not city."
+    case ErrorAddCityExist = "This city already exists."
+    case ErrorAddCityNoAPI = "No information about this city"
+    case ErrorAddCityDB = "Error data base write"
+    case ErrorLoadDB = "Error load towns from DB"
+    case ErrorLoadAPI = "Error load data for "
+}
+
+
 protocol TownWireframeProtocol: class {
     func showWeatherView(nameTown: String)
 }
 //MARK: Presenter -
 protocol TownPresenterProtocol: class {
     func count()->Int
-    func actionCellButton(index: Int?)
+    func actionChangeCell(index: Int?)
     func getTextTownInfo(index: Int)->(String, String, String)
     func getTypeTownInfo(index: Int)->Bool
     func showWeatherView(indexCell: Int)
@@ -49,6 +61,10 @@ protocol TownInteractorAPIProtocol: class {
     
     func loadAPIRequestTown(nameTown: String, completion: @escaping (TownAPIModel?)->())
     func error(text: String)
+}
+
+protocol TownTableViewCellDelegate: class {
+    func getIndex(index: Int?)  //ShoppingCart
 }
 
 

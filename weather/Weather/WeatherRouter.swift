@@ -16,7 +16,6 @@ class WeatherRouter: WeatherWireframeProtocol {
     static func createModule(nameTown: String) -> UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let view = storyboard.instantiateViewController(withIdentifier: "WeatherViewController") as! WeatherViewController
-        //let view = WeatherViewController(nibName: "WeatherViewController", bundle: nil)
         let interactor = WeatherInteractor()
         let router = WeatherRouter()
         let presenter = WeatherPresenter(interface: view as WeatherViewProtocol, interactor: interactor, router: router)
