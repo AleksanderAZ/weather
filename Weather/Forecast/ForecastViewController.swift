@@ -1,5 +1,5 @@
 //
-//  WeatherViewController.swift
+//  ForecastViewController.swift
 //  weather
 //
 //  Created Z on 6/11/19.
@@ -11,9 +11,9 @@
 import UIKit
 
 class ForecastViewController: UIViewController, ForecastViewProtocol {
-	var presenter: WeatherPresenterProtocol?
+	var presenter: ForecastPresenterProtocol?
     
-    @IBOutlet weak var weatherTableView: UITableView!
+    @IBOutlet weak var forecastTableView: UITableView!
     @IBOutlet weak var tatleLabel: UILabel!
     
 	override func viewDidLoad() {
@@ -24,9 +24,9 @@ class ForecastViewController: UIViewController, ForecastViewProtocol {
 
     func update() {
         DispatchQueue.main.async {
-            self.weatherTableView.reloadData()
+            self.forecastTableView.reloadData()
             let sectionIndex = IndexSet(integer: 0)
-            self.weatherTableView.reloadSections(sectionIndex, with: .none)
+            self.forecastTableView.reloadSections(sectionIndex, with: .none)
         }
     }
     
@@ -62,10 +62,10 @@ extension ForecastViewController:  UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier:"WeatherTableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier:"ForecastTableViewCell", for: indexPath)
 
         if let cell = cell as? ForecastTableViewCellProtocol {
-            let text = presenter?.getTextWeatherInfo(index: indexPath.row) ?? ""
+            let text = presenter?.getForecastInfo(index: indexPath.row) ?? ""
             cell.configCell(text: text)
         }
         return cell

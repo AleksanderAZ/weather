@@ -1,5 +1,5 @@
 //
-//  WeatherTableViewCell.swift
+//  ForecastTableViewCell.swift
 //  weather
 //
 //  Created by Z on 6/14/19.
@@ -9,7 +9,7 @@
 import UIKit
 
 class ForecastTableViewCell: UITableViewCell, ForecastTableViewCellProtocol {
-    @IBOutlet weak var weatherLabel: UILabel!
+    @IBOutlet weak var forecastLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,6 +20,6 @@ class ForecastTableViewCell: UITableViewCell, ForecastTableViewCellProtocol {
     }
     
     func configCell(text: String) {
-        weatherLabel.text = text
+        forecastLabel.text = text
     }
 }

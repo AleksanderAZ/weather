@@ -1,5 +1,5 @@
 //
-//  WeatherProtocols.swift
+//  ForecastProtocols.swift
 //  weather
 //
 //  Created Z on 6/11/19.
@@ -14,9 +14,9 @@ import Foundation
 protocol ForecastWireframeProtocol: class {
 }
 //MARK: Presenter -
-protocol WeatherPresenterProtocol: class {
+protocol ForecastPresenterProtocol: class {
     func count()->Int?
-    func getTextWeatherInfo(index: Int)->String
+    func getForecastInfo(index: Int)->String
     func getTitle()->String
     func loadData()
     func error(text: String)
@@ -24,14 +24,14 @@ protocol WeatherPresenterProtocol: class {
 
 //MARK: Interactor -
 protocol ForecastInteractorProtocol: class {
-    var presenter: WeatherPresenterProtocol?  { get set }
-    func loadAPIRequestWeather(nameTown: String, completion: @escaping (ForecastAPIModel?)->())
+    var presenter: ForecastPresenterProtocol?  { get set }
+    func loadAPIRequestForecast(nameTown: String, completion: @escaping (ForecastAPIModel?)->())
     func error(text: String)
 }
 
 //MARK: View -
 protocol ForecastViewProtocol: class {
-    var presenter: WeatherPresenterProtocol?  { get set }
+    var presenter: ForecastPresenterProtocol?  { get set }
     func update()
     func showError(text: String)
 }

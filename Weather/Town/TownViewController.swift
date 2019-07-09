@@ -113,7 +113,7 @@ extension TownViewController: UITableViewDelegate {
 extension TownViewController: TownTableViewCellDelegate {
     func getIndex(index: Int?) {
         guard let index = index else { return }
-        presenter?.showWeatherView(indexCell: index)
+        presenter?.showForecastView(indexCell: index)
     }
 }
 

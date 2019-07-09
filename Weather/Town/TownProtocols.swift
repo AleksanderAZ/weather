@@ -16,7 +16,7 @@ import Foundation
 
 
 protocol TownWireframeProtocol: class {
-    func showWeatherView(nameTown: String)
+    func showForecastView(nameTown: String)
 }
 //MARK: Presenter -
 protocol TownPresenterProtocol: class {
@@ -24,7 +24,7 @@ protocol TownPresenterProtocol: class {
     func actionChangeCell(index: Int?)
     func getTextTownInfo(index: Int)->(String, String, String)
     func getTypeTownInfo(index: Int)->Bool
-    func showWeatherView(indexCell: Int)
+    func showForecastView(indexCell: Int)
     func choiceTown(townName: String?)
     func addTown(townName: String?)
     func updata(towns: [TownModel]?)

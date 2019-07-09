@@ -1,5 +1,5 @@
 //
-//  WeatherModel.swift
+//  ForecastModel.swift
 //  weather
 //
 //  Created by Z on 6/15/19.
@@ -9,5 +9,5 @@
 import Foundation
 
 struct ForecastModel {
-    var weatherForecast: String
+    var forecast: String
 }

@@ -15,7 +15,7 @@ class ForecastRouter: ForecastWireframeProtocol {
     
     static func createModule(nameTown: String) -> UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let view = storyboard.instantiateViewController(withIdentifier: "ForecaViewController") as! ForecastViewController
+        let view = storyboard.instantiateViewController(withIdentifier: "ForecastViewController") as! ForecastViewController
         let interactor = ForecastInteractor()
         let router = ForecastRouter()
         let presenter = ForecastPresenter(interface: view as ForecastViewProtocol, interactor: interactor, router: router)

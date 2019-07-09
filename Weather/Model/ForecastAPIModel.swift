@@ -1,5 +1,5 @@
 //
-//  WeatherAPIModel.swift
+//  ForecastAPIModel.swift
 //  weather
 //
 //  Created by Z on 6/29/19.

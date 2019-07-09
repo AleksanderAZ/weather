@@ -10,7 +10,7 @@ import Foundation
 struct RequestsDataAPI {
     static let baseURL = "https://api.openweathermap.org/data/2.5/"
     static let townPath = "weather"
-    static let weatherPath = "forecast"
+    static let forecastPath = "forecast"
     static let parameters: [String: String] = ["appid": "597cc5df41a36ea7a1e477cbbdec8485", "units": "metric"]
 }
 

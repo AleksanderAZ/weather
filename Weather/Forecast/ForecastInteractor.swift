@@ -1,5 +1,5 @@
 //
-//  WeatherInteractor.swift
+//  ForecastInteractor.swift
 //  weather
 //
 //  Created Z on 6/11/19.
@@ -10,10 +10,10 @@
 
 import UIKit
 
-class ForecastInteractor: WeatherInteractorProtocol {
-    weak var presenter: WeatherPresenterProtocol?
+class ForecastInteractor: ForecastInteractorProtocol {
+    weak var presenter: ForecastPresenterProtocol?
     
-    func loadAPIRequestWeather(nameTown: String, completion: @escaping (ForecastAPIModel?)->()) {
+    func loadAPIRequestForecast(nameTown: String, completion: @escaping (ForecastAPIModel?)->()) {
         let url: String = RequestsDataAPI.baseURL + RequestsDataAPI.forecastPath
         NetworkServiceAPI.shared.loadAPIRequest(url: url, nameTown: nameTown) { [weak self] (result: ForecastAPIModel?, error: String?) in
             if let err = error {
