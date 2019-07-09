@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct WeatherModel {
+struct ForecastModel {
     var weatherForecast: String
 }

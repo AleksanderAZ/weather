@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WeatherTableViewCell: UITableViewCell, WeatherTableViewCellProtocol {
+class ForecastTableViewCell: UITableViewCell, ForecastTableViewCellProtocol {
     @IBOutlet weak var weatherLabel: UILabel!
     
     override func awakeFromNib() {

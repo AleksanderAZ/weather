@@ -10,12 +10,12 @@
 
 import UIKit
 
-class WeatherInteractor: WeatherInteractorProtocol {
+class ForecastInteractor: WeatherInteractorProtocol {
     weak var presenter: WeatherPresenterProtocol?
     
-    func loadAPIRequestWeather(nameTown: String, completion: @escaping (WeatherAPIModel?)->()) {
-        let url: String = RequestsDataAPI.baseURL + RequestsDataAPI.weatherPath
-        NetworkServiceAPI.shared.loadAPIRequest(url: url, nameTown: nameTown) { [weak self] (result: WeatherAPIModel?, error: String?) in
+    func loadAPIRequestWeather(nameTown: String, completion: @escaping (ForecastAPIModel?)->()) {
+        let url: String = RequestsDataAPI.baseURL + RequestsDataAPI.forecastPath
+        NetworkServiceAPI.shared.loadAPIRequest(url: url, nameTown: nameTown) { [weak self] (result: ForecastAPIModel?, error: String?) in
             if let err = error {
                 self?.error(text: err)
             }

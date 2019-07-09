@@ -1,5 +1,5 @@
 //
-//  WeatherRouter.swift
+//  ForecastRouter.swift
 //  weather
 //
 //  Created Z on 6/11/19.
@@ -10,15 +10,15 @@
 
 import UIKit
 
-class WeatherRouter: WeatherWireframeProtocol {
+class ForecastRouter: ForecastWireframeProtocol {
     weak var viewController: UIViewController?
     
     static func createModule(nameTown: String) -> UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let view = storyboard.instantiateViewController(withIdentifier: "WeatherViewController") as! WeatherViewController
-        let interactor = WeatherInteractor()
-        let router = WeatherRouter()
-        let presenter = WeatherPresenter(interface: view as WeatherViewProtocol, interactor: interactor, router: router)
+        let view = storyboard.instantiateViewController(withIdentifier: "ForecaViewController") as! ForecastViewController
+        let interactor = ForecastInteractor()
+        let router = ForecastRouter()
+        let presenter = ForecastPresenter(interface: view as ForecastViewProtocol, interactor: interactor, router: router)
         presenter.nameTown = nameTown
         view.presenter = presenter
         interactor.presenter = presenter

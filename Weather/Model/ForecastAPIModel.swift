@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WeatherAPIModel: Codable {
+struct ForecastAPIModel: Codable {
     let cod: String?
     let message: Double?
     let cnt: Int?

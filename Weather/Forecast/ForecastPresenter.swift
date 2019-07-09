@@ -10,12 +10,12 @@
 
 import UIKit
 
-class WeatherPresenter: WeatherPresenterProtocol {
+class ForecastPresenter: WeatherPresenterProtocol {
     weak private var view: WeatherViewProtocol?
     var interactor: WeatherInteractorProtocol?
     private let router: WeatherWireframeProtocol
     var nameTown: String?
-    var weatherModel: [WeatherModel]?
+    var weatherModel: [ForecastModel]?
     
     init(interface: WeatherViewProtocol, interactor: WeatherInteractorProtocol?, router: WeatherWireframeProtocol) {
         self.view = interface
@@ -23,14 +23,14 @@ class WeatherPresenter: WeatherPresenterProtocol {
         self.router = router
     }
     
-    func updata(weather: [WeatherModel]?) {
+    func updata(weather: [ForecastModel]?) {
         self.weatherModel = weather
         self.view?.update()
     }
     
     func loadData() {
         guard let name = self.nameTown else { return }
-        self.loadInfo(nameTown: name) { [weak self] (result: [WeatherModel]?) in
+        self.loadInfo(nameTown: name) { [weak self] (result: [ForecastModel]?) in
              self?.updata(weather: result)
         }
     }
@@ -45,7 +45,7 @@ class WeatherPresenter: WeatherPresenterProtocol {
     }
     
     func getTextWeatherInfo(index: Int)->String {
-        let weatherForecast = (weatherModel?[index].weatherForecast ?? "")
+        let weatherForecast = (weatherModel?[index].forecast ?? "")
         return weatherForecast
     }
     
@@ -53,11 +53,11 @@ class WeatherPresenter: WeatherPresenterProtocol {
         self.view?.showError(text: text)
     }
     
-    func loadInfo(nameTown: String, completion: @escaping ([WeatherModel]?)->()) {
-        interactor?.loadAPIRequestWeather(nameTown: nameTown) { [weak self] (result: WeatherAPIModel?) in
+    func loadInfo(nameTown: String, completion: @escaping ([ForecastModel]?)->()) {
+        interactor?.loadAPIRequestWeather(nameTown: nameTown) { [weak self] (result: ForecastAPIModel?) in
             guard let list = result?.list else { return }
             let count = list.count
-            var weatherModel = [WeatherModel]()
+            var weatherModel = [ForecastModel]()
             var date: String = ""
             var tempr: String = ""
             var rain: String = "0"
@@ -76,7 +76,7 @@ class WeatherPresenter: WeatherPresenterProtocol {
                 }
                 
                 let text = "For time: " + date + "\n" +  "tempr - " + tempr + "C,\nmain - " + main + ",\nrain - " + rain + "%"
-                weatherModel.append(WeatherModel(weatherForecast: text))
+                weatherModel.append(ForecastModel(forecast: text))
             }
             completion(weatherModel)
         }

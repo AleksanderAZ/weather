@@ -10,7 +10,7 @@
 
 import UIKit
 
-class WeatherViewController: UIViewController, WeatherViewProtocol {
+class ForecastViewController: UIViewController, ForecastViewProtocol {
 	var presenter: WeatherPresenterProtocol?
     
     @IBOutlet weak var weatherTableView: UITableView!
@@ -52,7 +52,7 @@ class WeatherViewController: UIViewController, WeatherViewProtocol {
     }
 }
 
-extension WeatherViewController:  UITableViewDataSource {
+extension ForecastViewController:  UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -64,7 +64,7 @@ extension WeatherViewController:  UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:"WeatherTableViewCell", for: indexPath)
 
-        if let cell = cell as? WeatherTableViewCellProtocol {
+        if let cell = cell as? ForecastTableViewCellProtocol {
             let text = presenter?.getTextWeatherInfo(index: indexPath.row) ?? ""
             cell.configCell(text: text)
         }
@@ -72,7 +72,7 @@ extension WeatherViewController:  UITableViewDataSource {
     }
 }
 
-extension WeatherViewController: UITableViewDelegate {
+extension ForecastViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
 }

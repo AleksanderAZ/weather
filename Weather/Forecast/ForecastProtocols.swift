@@ -11,7 +11,7 @@
 import Foundation
 
 //MARK: Wireframe -
-protocol WeatherWireframeProtocol: class {
+protocol ForecastWireframeProtocol: class {
 }
 //MARK: Presenter -
 protocol WeatherPresenterProtocol: class {
@@ -23,19 +23,19 @@ protocol WeatherPresenterProtocol: class {
 }
 
 //MARK: Interactor -
-protocol WeatherInteractorProtocol: class {
+protocol ForecastInteractorProtocol: class {
     var presenter: WeatherPresenterProtocol?  { get set }
-    func loadAPIRequestWeather(nameTown: String, completion: @escaping (WeatherAPIModel?)->())
+    func loadAPIRequestWeather(nameTown: String, completion: @escaping (ForecastAPIModel?)->())
     func error(text: String)
 }
 
 //MARK: View -
-protocol WeatherViewProtocol: class {
+protocol ForecastViewProtocol: class {
     var presenter: WeatherPresenterProtocol?  { get set }
     func update()
     func showError(text: String)
 }
 
-protocol WeatherTableViewCellProtocol: class {
+protocol ForecastTableViewCellProtocol: class {
     func configCell(text: String)
 }
