@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WeatherTownViewController" customModule="weather" customModuleProvider="target">
+            <connections>
+                <outlet property="addButton" destination="mMX-vq-iAp" id="0XZ-4I-Hgj"/>
+                <outlet property="indicator" destination="8E6-Xz-HQc" id="XEP-aB-cnL"/>
+                <outlet property="townTableView" destination="Pbs-tx-idI" id="eL5-h0-MlF"/>
+                <outlet property="townTextField" destination="6Sd-LS-Vh5" id="lGC-yn-pDY"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e2o-SX-iB7">
+                    <rect key="frame" x="0.0" y="60" width="375" height="607"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hC6-yO-0M9">
+                            <rect key="frame" x="8" y="8" width="359" height="66.5"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="k2T-iG-lvd">
+                                    <rect key="frame" x="8" y="8" width="343" height="50.5"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select city" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoQ-EV-KSc">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
+                                            <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="oTa-jV-Xh6">
+                                            <rect key="frame" x="0.0" y="20.5" width="343" height="30"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="input city name" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="6Sd-LS-Vh5">
+                                                    <rect key="frame" x="0.0" y="0.0" width="235" height="30"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <action selector="townTextFieldEdit:" destination="-1" eventType="editingChanged" id="cvU-Zr-2Hl"/>
+                                                    </connections>
+                                                </textField>
+                                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mMX-vq-iAp" customClass="ButtonView" customModule="weather" customModuleProvider="target">
+                                                    <rect key="frame" x="243" y="0.0" width="100" height="30"/>
+                                                    <color key="backgroundColor" red="0.80000000000000004" green="0.20000000000000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="100" id="bEB-LB-Waf"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <inset key="contentEdgeInsets" minX="6" minY="0.0" maxX="4" maxY="0.0"/>
+                                                    <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                                                    <state key="normal" title="Add">
+                                                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="addButtonAction:" destination="-1" eventType="touchUpInside" id="Pv0-2H-I7L"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="k2T-iG-lvd" secondAttribute="trailing" constant="8" id="FR5-ZR-WLu"/>
+                                <constraint firstItem="k2T-iG-lvd" firstAttribute="top" secondItem="hC6-yO-0M9" secondAttribute="top" constant="8" id="Gkj-dR-sni"/>
+                                <constraint firstAttribute="bottom" secondItem="k2T-iG-lvd" secondAttribute="bottom" constant="8" id="IVJ-pJ-hCZ"/>
+                                <constraint firstItem="k2T-iG-lvd" firstAttribute="leading" secondItem="hC6-yO-0M9" secondAttribute="leading" constant="8" id="hDR-kN-Hpf"/>
+                            </constraints>
+                        </view>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Pbs-tx-idI">
+                            <rect key="frame" x="8" y="90.5" width="359" height="508.5"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.58430534599999995" green="0.9194215536" blue="0.89044839139999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="hC6-yO-0M9" firstAttribute="leading" secondItem="e2o-SX-iB7" secondAttribute="leading" constant="8" id="Isb-Hi-S2J"/>
+                        <constraint firstItem="hC6-yO-0M9" firstAttribute="top" secondItem="e2o-SX-iB7" secondAttribute="top" constant="8" id="TQN-Se-hHd"/>
+                        <constraint firstAttribute="trailing" secondItem="hC6-yO-0M9" secondAttribute="trailing" constant="8" id="gL3-N6-THd"/>
+                        <constraint firstAttribute="bottom" secondItem="Pbs-tx-idI" secondAttribute="bottom" constant="8" id="l13-zU-4WD"/>
+                        <constraint firstAttribute="trailing" secondItem="Pbs-tx-idI" secondAttribute="trailing" constant="8" id="nCK-xQ-66d"/>
+                        <constraint firstItem="Pbs-tx-idI" firstAttribute="top" secondItem="hC6-yO-0M9" secondAttribute="bottom" constant="16" id="t3v-kh-0X9"/>
+                        <constraint firstItem="Pbs-tx-idI" firstAttribute="leading" secondItem="e2o-SX-iB7" secondAttribute="leading" constant="8" id="tVp-Eo-yQE"/>
+                    </constraints>
+                </view>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="8E6-Xz-HQc">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </activityIndicatorView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="e2o-SX-iB7" secondAttribute="trailing" id="7sm-Ux-3Tw"/>
+                <constraint firstAttribute="bottom" secondItem="8E6-Xz-HQc" secondAttribute="bottom" id="F37-W8-oP3"/>
+                <constraint firstItem="8E6-Xz-HQc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="OwP-E6-PAE"/>
+                <constraint firstAttribute="trailing" secondItem="8E6-Xz-HQc" secondAttribute="trailing" id="PIl-W5-dFC"/>
+                <constraint firstItem="e2o-SX-iB7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="60" id="RdZ-hD-Sm6"/>
+                <constraint firstItem="e2o-SX-iB7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="YZF-Vb-ioG"/>
+                <constraint firstItem="8E6-Xz-HQc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="aeE-xh-Ghj"/>
+                <constraint firstAttribute="bottom" secondItem="e2o-SX-iB7" secondAttribute="bottom" id="pRw-ed-glv"/>
+            </constraints>
+        </view>
+    </objects>
+</document>
