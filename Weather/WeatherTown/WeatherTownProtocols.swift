@@ -29,31 +29,18 @@ protocol WeatherTownPresenterProtocol: class {
 
 //MARK: Interactor -
 protocol WeatherTownInteractorProtocol: class {
-
-  var presenter: WeatherTownPresenterProtocol?  { get set }
-}
-
-//MARK: View -
-protocol WeatherTownViewProtocol: class {
-
-  var presenter: WeatherTownPresenterProtocol?  { get set }
-    
-    func update()
-    func showError(text: String)
-}
-
-protocol WeatherTownInteractorDBProtocol: class {
     var presenter: WeatherTownPresenterProtocol?  { get set }
-    
+    func loadAPIRequestTown(nameTown: String, completion: @escaping (TownAPIModel?)->())
     func addItem(item: TownItemDB, completion: @escaping (String?)->())
     func getItems(completion: @escaping ([TownItemDB]?)->())
     func error(text: String)
 }
-protocol WeatherTownInteractorAPIProtocol: class {
+
+//MARK: View -
+protocol WeatherTownViewProtocol: class {
     var presenter: WeatherTownPresenterProtocol?  { get set }
-    
-    func loadAPIRequestTown(nameTown: String, completion: @escaping (TownAPIModel?)->())
-    func error(text: String)
+    func update()
+    func showError(text: String)
 }
 
 protocol WeatherTownTableViewCellDelegate: class {

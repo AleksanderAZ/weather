@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ForecastWeatherViewController" customModule="weather" customModuleProvider="target">
+            <connections>
+                <outlet property="forecastTableView" destination="tpv-iR-Oqt" id="mWl-Kp-bxd"/>
+                <outlet property="nameTownLabel" destination="chA-Hj-cKU" id="ach-1Q-NeO"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Xr-Hc-j7s">
+                    <rect key="frame" x="0.0" y="60" width="375" height="607"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chA-Hj-cKU">
+                            <rect key="frame" x="8" y="8" width="359" height="27.5"/>
+                            <fontDescription key="fontDescription" type="italicSystem" pointSize="22"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                            <color key="shadowColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <size key="shadowOffset" width="2" height="-1"/>
+                        </label>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tpv-iR-Oqt">
+                            <rect key="frame" x="8" y="43.5" width="359" height="555.5"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="sectionIndexBackgroundColor" red="0.022154781967401505" green="0.98716288805007935" blue="0.97706300020217896" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0027301176451146603" green="0.98887878656387329" blue="0.91024202108383179" alpha="0.40199593321917809" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="tpv-iR-Oqt" secondAttribute="bottom" constant="8" id="0J3-RM-iiN"/>
+                        <constraint firstAttribute="trailing" secondItem="tpv-iR-Oqt" secondAttribute="trailing" constant="8" id="9Qr-9K-drB"/>
+                        <constraint firstItem="tpv-iR-Oqt" firstAttribute="top" secondItem="chA-Hj-cKU" secondAttribute="bottom" constant="8" id="Eeh-MV-nDC"/>
+                        <constraint firstItem="chA-Hj-cKU" firstAttribute="leading" secondItem="1Xr-Hc-j7s" secondAttribute="leading" constant="8" id="Ivf-ta-IWP"/>
+                        <constraint firstItem="tpv-iR-Oqt" firstAttribute="leading" secondItem="1Xr-Hc-j7s" secondAttribute="leading" constant="8" id="JKJ-6n-Ajx"/>
+                        <constraint firstAttribute="trailing" secondItem="chA-Hj-cKU" secondAttribute="trailing" constant="8" id="dwp-c9-pF4"/>
+                        <constraint firstItem="chA-Hj-cKU" firstAttribute="top" secondItem="1Xr-Hc-j7s" secondAttribute="top" constant="8" id="f5g-L8-NLi"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="1Xr-Hc-j7s" secondAttribute="trailing" id="5AG-eT-YDW"/>
+                <constraint firstItem="1Xr-Hc-j7s" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="60" id="Ihu-LG-dM0"/>
+                <constraint firstItem="1Xr-Hc-j7s" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Z3v-pL-rul"/>
+                <constraint firstAttribute="bottom" secondItem="1Xr-Hc-j7s" secondAttribute="bottom" id="xv4-Ms-6lJ"/>
+            </constraints>
+            <point key="canvasLocation" x="40.799999999999997" y="46.326836581709152"/>
+        </view>
+    </objects>
+</document>

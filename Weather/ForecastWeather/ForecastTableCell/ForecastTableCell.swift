@@ -1,25 +1,26 @@
 //
-//  ForecastTableViewCell.swift
+//  ForecastTableCell.swift
 //  weather
 //
-//  Created by Z on 6/14/19.
+//  Created by Z on 7/15/19.
 //  Copyright © 2019 Zyma. All rights reserved.
 //
 
 import UIKit
 
-class ForecastTableViewCell: UITableViewCell, ForecastTableViewCellProtocol {
-    @IBOutlet weak var forecastLabel: UILabel!
+class ForecastTableCell: UITableViewCell {
+
+    @IBOutlet weak var forecastInfoLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
     }
     
-    func configCell(text: String) {
-        forecastLabel.text = text
-    }
 }

@@ -14,18 +14,15 @@ class WeatherTownPresenter: WeatherTownPresenterProtocol {
 
     weak private var view: WeatherTownViewProtocol?
     var interactor: WeatherTownInteractorProtocol?
-    var interactorAPI: WeatherTownInteractorAPIProtocol?
-    var interactorDB: WeatherTownInteractorDBProtocol?
     private let router: WeatherTownWireframeProtocol
 
     private var filtr: String?
     var townModel: [TownModel]?
     var townModelFiltr: [TownModel]?
 
-    init(interface: WeatherTownViewProtocol, interactorAPI: WeatherTownInteractorAPIProtocol?, interactorDB: WeatherTownInteractorDBProtocol?, router: WeatherTownWireframeProtocol) {
+    init(interface: WeatherTownViewProtocol, interactor: WeatherTownInteractorProtocol?, router: WeatherTownWireframeProtocol) {
         self.view = interface
-        self.interactorAPI = interactorAPI
-        self.interactorDB = interactorDB
+        self.interactor = interactor
         self.router = router
         
         self.loadData(filtr: nil)
@@ -83,7 +80,7 @@ class WeatherTownPresenter: WeatherTownPresenterProtocol {
     }
     
     func loadTownInfo(nameTown: String, completion: @escaping (String?, String?, String?)->()) {
-        interactorAPI?.loadAPIRequestTown(nameTown: nameTown) { [weak self] (result: TownAPIModel?) in
+        interactor?.loadAPIRequestTown(nameTown: nameTown) { [weak self] (result: TownAPIModel?) in
             guard let result = result else {
                 self?.error(text: ErrorInfo.ErrorAPI.rawValue)
                 return
@@ -144,7 +141,7 @@ class WeatherTownPresenter: WeatherTownPresenterProtocol {
             }
             let item = TownItemDB()
             item.nameTown = name
-            self?.interactorDB?.addItem(item: item) { [weak self] (name: String?) in
+            self?.interactor?.addItem(item: item) { [weak self] (name: String?) in
                 guard let name = name else {
                     self?.error(text: ErrorInfo.ErrorAddCityDB.rawValue)
                     return
@@ -191,7 +188,7 @@ class WeatherTownPresenter: WeatherTownPresenterProtocol {
     }
     
     func loadTowns() {
-        interactorDB?.getItems() { [weak self] (result: [TownItemDB]?) in
+        interactor?.getItems() { [weak self] (result: [TownItemDB]?) in
             let count = result?.count ?? 0
             let index: Int = 0
             self?.townModel?.removeAll()

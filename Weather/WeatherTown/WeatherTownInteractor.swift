@@ -9,8 +9,51 @@
 //
 
 import UIKit
+import RealmSwift
 
 class WeatherTownInteractor: WeatherTownInteractorProtocol {
-
     weak var presenter: WeatherTownPresenterProtocol?
+    
+    func addItem(item: TownItemDB, completion: @escaping (String?)->()) {
+        DispatchQueue.main.async {
+            TownDataBase.shared.write() { (realm: Realm) in
+                realm.add(item)
+            }
+            completion(item.nameTown)
+        }
+    }
+    
+    func getItems(completion: @escaping ([TownItemDB]?)->()) {
+        DispatchQueue.main.async {
+            guard let realm = TownDataBase.shared.uiRealm else {
+                self.error(text:  ErrorInfo.ErrorLoadDB.rawValue)
+                return
+            }
+            let townsDB = realm.objects(TownItemDB.self).sorted(by: { (lhsData, rhsData) -> Bool in
+                return lhsData.nameTown > rhsData.nameTown
+            })
+            completion(townsDB)
+        }
+    }
+    
+    func loadAPIRequestTown(nameTown: String, completion: @escaping (TownAPIModel?)->()) {
+        let url: String = RequestsDataAPI.baseURL + RequestsDataAPI.townPath
+        NetworkServiceAPI.shared.loadAPIRequest(url: url, nameTown: nameTown) { [weak self] (result: TownAPIModel?, error: String?) in
+            if let err = error {
+                self?.error(text: err)
+            }
+            else {
+                if result?.cod == 200 {
+                    completion(result)
+                }
+                else {
+                    self?.error(text: ErrorInfo.ErrorLoadAPI.rawValue + nameTown)
+                }
+            }
+        }
+    }
+    
+    func error(text: String) {
+        self.presenter?.error(text: text)
+    }
 }

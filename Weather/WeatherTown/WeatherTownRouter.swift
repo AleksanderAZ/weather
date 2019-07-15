@@ -18,24 +18,21 @@ class WeatherTownRouter: WeatherTownWireframeProtocol {
         // Change to get view from storyboard if not using progammatic UI
         let view = WeatherTownViewController(nibName: nil, bundle: nil)
         let interactor = WeatherTownInteractor()
-        let interactorDB = WeatherTownInteractorDB()
-        let interactorAPI = WeatherTownInteractorAPI()
         
         let router = WeatherTownRouter()
         //let presenter = WeatherTownPresenter(interface: view, interactor: interactor, router: router)
-        let presenter = WeatherTownPresenter(interface: view, interactorAPI: interactorAPI, interactorDB: interactorDB, router: router)
+        let presenter = WeatherTownPresenter(interface: view, interactor: interactor, router: router)
         
         view.presenter = presenter
         interactor.presenter = presenter
-        interactorAPI.presenter = presenter
-        interactorDB.presenter = presenter
         router.viewController = view
 
         return view
     }
     
     func showForecastView(nameTown: String) {
-        let view = ForecastRouter.createModule(nameTown: nameTown)
+        
+        let view = ForecastWeatherRouter.createModule(nameTown: nameTown)
         self.viewController?.navigationController?.pushViewController(view, animated: true)
     }
 }

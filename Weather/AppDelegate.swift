@@ -19,9 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         self.window = UIWindow(frame:UIScreen.main.bounds)
-        let rootView = WeatherTownRouter.createModule()
-        self.navController = UINavigationController(rootViewController: rootView)
-        self.window?.rootViewController = self.navController
+        let weatherView = WeatherTownRouter.createModule()
+        let navigationController = UINavigationController()
+        navigationController.pushViewController(weatherView, animated: true)
+        self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
       
         return true
