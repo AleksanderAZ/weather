@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame:UIScreen.main.bounds)
         let weatherView = WeatherTownRouter.createModule()
         let navigationController = UINavigationController()
+        navigationController.navigationBar.isTranslucent = false
         navigationController.pushViewController(weatherView, animated: true)
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
